@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Performance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0A0A0F;
+            --bg-secondary: #12121A;
+            --bg-card: rgba(26, 26, 46, 0.6);
+            --border: #2D2D44;
+            --text-primary: #F5F5F7;
+            --text-secondary: #9CA3AF;
+            --accent-gold: #F59E0B;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --accent-purple: #9333EA;
+            --accent-blue: #3B82F6;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #1A1A2E 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 24px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding: 32px 0;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F5F5F7, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .header .week-badge {
+            display: inline-block;
+            background: var(--accent-purple);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        /* Winner Card */
+        .winner-section {
+            margin-bottom: 48px;
+        }
+
+        .winner-card {
+            background: linear-gradient(135deg, rgba(249, 158, 11, 0.15), rgba(147, 51, 234, 0.1));
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winner-card::before {
+            content: '🏆';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+        }
+
+        .winner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-gold);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .winner-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .winner-hook {
+            font-size: 18px;
+            color: var(--accent-gold);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .winner-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .winner-thumbnail {
+            position: relative;
+        }
+
+        .thumbnail-container {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            width: 280px;
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border);
+            position: relative;
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-placeholder {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .thumbnail-placeholder .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-purple);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: #7C3AED;
+            transform: translateY(-2px);
+        }
+
+        /* Performance Table */
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .performance-table {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 100px 80px 1fr 100px 80px 80px 80px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 16px 24px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 60px 100px 80px 1fr 100px 80px 80px 80px;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            font-size: 24px;
+        }
+
+        .format-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .format-carousel {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .format-video {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+        }
+
+        .format-image {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .hook-text {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .cpa-value {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .cpa-good { color: var(--accent-green); }
+        .cpa-medium { color: var(--accent-gold); }
+        .cpa-bad { color: var(--accent-red); }
+
+        .signups {
+            font-weight: 600;
+        }
+
+        .table-link {
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .table-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Insights Grid */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .insight-card h3 {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+        }
+
+        .insight-label {
+            color: var(--text-secondary);
+        }
+
+        .insight-value {
+            font-weight: 600;
+        }
+
+        .insight-value.positive { color: var(--accent-green); }
+        .insight-value.negative { color: var(--accent-red); }
+        .insight-value.neutral { color: var(--accent-gold); }
+
+        /* Recommendations */
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .rec-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .rec-card.scale {
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent);
+        }
+
+        .rec-card.test {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), transparent);
+        }
+
+        .rec-card.avoid {
+            border-color: var(--accent-red);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), transparent);
+        }
+
+        .rec-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .rec-icon {
+            font-size: 28px;
+        }
+
+        .rec-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .rec-list {
+            list-style: none;
+        }
+
+        .rec-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .rec-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--accent-purple);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .winner-card {
+                grid-template-columns: 1fr;
+            }
+
+            .winner-thumbnail {
+                order: -1;
+            }
+
+            .thumbnail-container {
+                max-height: 300px;
+            }
+
+            .recommendations {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 50px 80px 1fr 80px 80px;
+            }
+
+            .table-header > *:nth-child(3),
+            .table-row > *:nth-child(3),
+            .table-header > *:nth-child(7),
+            .table-row > *:nth-child(7),
+            .table-header > *:last-child,
+            .table-row > *:last-child {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .winner-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header,
+            .table-row {
+                font-size: 12px;
+                padding: 12px 16px;
+                grid-template-columns: 40px 60px 1fr 70px;
+            }
+
+            .table-header > *:nth-child(2),
+            .table-row > *:nth-child(2),
+            .table-header > *:nth-child(5),
+            .table-row > *:nth-child(5) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📊 Creative Performance</h1>
+            <span class="week-badge">5 Jan - 11 Jan (Week 2)</span>
+        </header>
+
+        <!-- Winner Section -->
+        <section class="winner-section">
+            <div class="winner-card">
+                <div class="winner-content">
+                    <span class="winner-badge">🏆 BEST PERFORMER</span>
+                    <h2 class="winner-title">Godgpt: Google Video Ad</h2>
+                    <p class="winner-hook">"Video adapt to landscape, image + UGC video strengthens the message"</p>
+                    
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 16px; margin-bottom: 20px; font-size: 14px; line-height: 1.8;">
+                        <div style="color: var(--accent-gold);">👥 Real people, real experiences = immediate credibility</div>
+                        <div style="color: var(--accent-purple);">📸 Mixed content (image + UGC) = authentic & relatable</div>
+                        <div style="color: var(--accent-green);">💪 Strengthened message = clear value communication</div>
+                    </div>
+
+                    <div class="winner-stats">
+                        <div class="stat-box">
+                            <div class="stat-value">S$4.48</div>
+                            <div class="stat-label">Cost per Install</div>
+                            <div style="color: var(--accent-green); font-size: 12px; margin-top: 4px;">Best CPI of week</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">125</div>
+                            <div class="stat-label">App Installs</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">S$560</div>
+                            <div class="stat-label">Total Spend</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">Paid Subscribers</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="winner-thumbnail">
+                    <div class="thumbnail-container" style="height: 480px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                        <iframe 
+                            src="https://www.youtube.com/embed/kAs_RBooM3A" 
+                            style="width: 280px; height: 480px; border: none; border-radius: 16px;"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Godgpt Performance Table -->
+        <section>
+            <h2 class="section-title">📱 Godgpt App Install Performance <span style="font-size: 14px; color: var(--text-secondary);">(CPI)</span></h2>
+            <div class="performance-table">
+                <div class="table-header">
+                    <div>Rank</div>
+                    <div>Source</div>
+                    <div>Format</div>
+                    <div>Hook Message</div>
+                    <div>CPI</div>
+                    <div>Installs</div>
+                    <div>Spend</div>
+                    <div>Link</div>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">🥇</div>
+                    <div><span class="format-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green);">Google</span></div>
+                    <div><span class="format-badge format-video">Video</span></div>
+                    <div class="hook-text">"Testimonials + UGC = Trust Currency"</div>
+                    <div class="cpa-value cpa-good">S$4.48</div>
+                    <div class="signups">125</div>
+                    <div>S$560</div>
+                    <a href="https://www.youtube.com/shorts/kAs_RBooM3A" target="_blank" class="table-link">View →</a>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">🥈</div>
+                    <div><span class="format-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green);">Google</span></div>
+                    <div><span class="format-badge format-video">Video</span></div>
+                    <div class="hook-text">"Video adapt to landscape, image + UGC video strengthens the message"</div>
+                    <div class="cpa-value cpa-good">S$5.43</div>
+                    <div class="signups">23</div>
+                    <div>S$125</div>
+                    <a href="https://www.youtube.com/watch?v=FFN82TIvsxU" target="_blank" class="table-link">View →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Web App Traffic Performance Table -->
+        <section>
+            <h2 class="section-title">🌐 Web App Traffic Performance <span style="font-size: 14px; color: var(--text-secondary);">(Landing Page Views)</span></h2>
+            <div class="performance-table">
+                <div class="table-header">
+                    <div>Rank</div>
+                    <div>Source</div>
+                    <div>Format</div>
+                    <div>Hook Message</div>
+                    <div>Cost/LPV</div>
+                    <div>LPV</div>
+                    <div>Spend</div>
+                    <div>Link</div>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">🥇</div>
+                    <div><span class="format-badge" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);">TikTok</span></div>
+                    <div><span class="format-badge format-carousel">Carousel</span></div>
+                    <div class="hook-text">"$6 price point grab attention. Coffee habits are relatable."</div>
+                    <div class="cpa-value cpa-good">S$0.03</div>
+                    <div class="signups">33,708</div>
+                    <div>S$1,125</div>
+                    <a href="https://aelfblockchain.sg.larksuite.com/file/L0MmbzdVQon0c0xPVhNlszgjgNc" target="_blank" class="table-link">View →</a>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">🥈</div>
+                    <div><span class="format-badge" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);">TikTok</span></div>
+                    <div><span class="format-badge format-video">Video</span></div>
+                    <div class="hook-text">"Live app demo and first POV improve authenticity"</div>
+                    <div class="cpa-value cpa-good">S$0.03</div>
+                    <div class="signups">1,028</div>
+                    <div>S$28</div>
+                    <a href="https://www.tiktok.com/@godgpt_/video/7593222032364522763?lang=en" target="_blank" class="table-link">View →</a>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">🥉</div>
+                    <div><span class="format-badge" style="background: rgba(239, 68, 68, 0.2); color: var(--accent-red);">Meta</span></div>
+                    <div><span class="format-badge format-carousel">Carousel</span></div>
+                    <div class="hook-text">"$6 price point grab attention. Coffee habits are relatable."</div>
+                    <div class="cpa-value cpa-good">S$0.06</div>
+                    <div class="signups">4,905</div>
+                    <div>S$300</div>
+                    <a href="https://www.youtube.com/shorts/kAs_RBooM3A" target="_blank" class="table-link">View →</a>
+                </div>
+
+                <div class="table-row">
+                    <div class="rank">4</div>
+                    <div><span class="format-badge" style="background: rgba(239, 68, 68, 0.2); color: var(--accent-red);">Meta</span></div>
+                    <div><span class="format-badge format-video">Video</span></div>
+                    <div class="hook-text">"Testimonials, UGC"</div>
+                    <div class="cpa-value cpa-good">S$0.07</div>
+                    <div class="signups">610</div>
+                    <div>S$45</div>
+                    <a href="https://www.youtube.com/shorts/kAs_RBooM3A" target="_blank" class="table-link">View →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Grid -->
+        <section>
+            <h2 class="section-title">🔑 Key Insights</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>📱 App Install Summary</h3>
+                    <div class="insight-item">
+                        <span class="insight-label">Total Spend</span>
+                        <span class="insight-value neutral">S$973</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Total Installs</span>
+                        <span class="insight-value positive">196</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Average CPI</span>
+                        <span class="insight-value positive">S$4.96</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Best Channel</span>
+                        <span class="insight-value positive">Google Video S$4.48</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <h3>🌐 Web App Traffic Summary</h3>
+                    <div class="insight-item">
+                        <span class="insight-label">Total Spend</span>
+                        <span class="insight-value neutral">S$1,425</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Total LPV</span>
+                        <span class="insight-value positive">38,613</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Avg Cost/LPV</span>
+                        <span class="insight-value positive">S$0.037</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Best: TikTok Retarget</span>
+                        <span class="insight-value positive">S$0.03/LPV</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <h3>📊 Format Comparison</h3>
+                    <div class="insight-item">
+                        <span class="insight-label">Video (App Install)</span>
+                        <span class="insight-value positive">S$4.48 CPI</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Image (App Install)</span>
+                        <span class="insight-value positive">S$5.51 CPI</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Carousel (Traffic)</span>
+                        <span class="insight-value positive">S$0.03 avg</span>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-label">Winner</span>
+                        <span class="insight-value positive">Google Video best CPI</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section>
+            <h2 class="section-title">💡 Recommendations</h2>
+            <div class="recommendations">
+                <div class="rec-card scale">
+                    <div class="rec-header">
+                        <span class="rec-icon">✅</span>
+                        <span class="rec-title">Scale This</span>
+                    </div>
+                    <ul class="rec-list">
+                        <li>Google Video with UGC content - S$4.48 CPI (best performer)</li>
+                        <li>Mobile UX shown - Demonstrates ease of use</li>
+                        <li>Mixed content approach (image + UGC testimonials)</li>
+                        <li>"Not religious, not preachy" - Addresses objection directly</li>
+                    </ul>
+                </div>
+
+                <div class="rec-card test">
+                    <div class="rec-header">
+                        <span class="rec-icon">🧪</span>
+                        <span class="rec-title">Test Next</span>
+                    </div>
+                    <ul class="rec-list">
+                        <li>More Google video variations with mixed content</li>
+                        <li>Test Meta vs TikTok video formats (different platforms)</li>
+                        <li>Experiment with different UGC testimonial styles</li>
+                        <li>Cross-platform A/B: same creative different platforms</li>
+                    </ul>
+                </div>
+
+                <div class="rec-card avoid">
+                    <div class="rec-header">
+                        <span class="rec-icon">❌</span>
+                        <span class="rec-title">Avoid</span>
+                    </div>
+                    <ul class="rec-list">
+                        <li>TikTok boost with small budgets (poor conversion)</li>
+                        <li>Meta retargeting for app installs (higher CPI)</li>
+                        <li>Tests under S$100 budget (insufficient data)</li>
+                        <li>Carousel format for direct app installs</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hook Inspiration Section -->
+        <section>
+            <h2 class="section-title">💡 Hook Inspiration</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 280px); gap: 24px; margin-bottom: 48px; justify-content: center;">
+                <!-- Hook Creative 1 -->
+                <div>
+                    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 12px; position: relative;">
+                        <video src="video1.mp4" style="width: 280px; height: 480px; object-fit: cover; display: block;" controls autoplay muted loop></video>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Hook:</strong> Step by step guidance on new feature</p>
+                </div>
+                
+                <!-- Hook Creative 2 -->
+                <div>
+                    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 12px; position: relative;">
+                        <img src="image6.jpeg" alt="Hook Inspiration 2" style="width: 280px; height: 480px; object-fit: cover; display: block;">
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Hook:</strong> Community + 5-star social proof in real-life setting</p>
+                </div>
+                
+                <!-- Hook Creative 3 -->
+                <div>
+                    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 12px;">
+                        <img src="image 5.png" alt="Hook Inspiration 3" style="width: 280px; height: 480px; object-fit: cover; display: block;">
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;"><strong style="color: var(--text-primary);">Hook:</strong> Ask right question, focus on Myself as the key theme</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><a href="weekly-plan.html" style="background: var(--accent-purple); padding: 10px 20px; border-radius: 8px; color: white;">📊 View Weekly Ads Plan →</a></p>
+            <p style="margin-top: 16px;">Data Source: <a href="https://docs.google.com/spreadsheets/d/1vmmv9e1aMnpnObTBTQbMdAJBiBHQ67g-yuYvx9aNjAE/edit?gid=873665150#gid=873665150" target="_blank">Creative Performance Sheet (Week 2)</a></p>
+            <p style="margin-top: 8px;">Created with 🌌 cosmic energy · 2025</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Overflow Ads - Examples & Patterns</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: #f8f9f9;
+            color: #232629;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #232629;
+        }
+
+        .subtitle {
+            color: #6a737c;
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: white;
+            border: 1px solid #d6d9dc;
+            border-radius: 4px;
+            padding: 24px;
+        }
+
+        .question-title {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #0a84ff;
+        }
+
+        .question-body {
+            color: #232629;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Ad Container Base */
+        .ad-container {
+            background: white;
+            border: 1px solid #d6d9dc;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .ad-container:hover {
+            border-color: #9fa6ad;
+        }
+
+        /* Ad Label */
+        .ad-label {
+            font-size: 11px;
+            color: #9fa6ad;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 12px;
+            background: #f8f9f9;
+            border-bottom: 1px solid #e3e6e8;
+            font-weight: 500;
+        }
+
+        /* Type 1: Sidebar Display Ad */
+        .sidebar-ad {
+            cursor: pointer;
+        }
+
+        .sidebar-ad-content {
+            padding: 16px;
+        }
+
+        .sidebar-ad-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sidebar-ad-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0a84ff;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-ad-description {
+            font-size: 13px;
+            color: #6a737c;
+            line-height: 1.5;
+        }
+
+        .sidebar-ad-cta {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 12px;
+            background: #0a84ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .sidebar-ad-cta:hover {
+            background: #0066cc;
+        }
+
+        /* Type 2: Banner Ad */
+        .banner-ad {
+            grid-column: 1 / -1;
+            margin-bottom: 24px;
+        }
+
+        .banner-ad-content {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            gap: 20px;
+        }
+
+        .banner-ad-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .banner-ad-text {
+            flex: 1;
+        }
+
+        .banner-ad-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #232629;
+            margin-bottom: 6px;
+        }
+
+        .banner-ad-description {
+            font-size: 14px;
+            color: #6a737c;
+        }
+
+        .banner-ad-button {
+            padding: 10px 20px;
+            background: #0a84ff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .banner-ad-button:hover {
+            background: #0066cc;
+        }
+
+        /* Type 3: Job Listing Ad */
+        .job-ad {
+            cursor: pointer;
+        }
+
+        .job-ad-content {
+            padding: 16px;
+        }
+
+        .job-ad-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .job-ad-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 3px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .job-ad-info {
+            flex: 1;
+        }
+
+        .job-ad-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #0a84ff;
+            margin-bottom: 4px;
+        }
+
+        .job-ad-company {
+            font-size: 13px;
+            color: #6a737c;
+        }
+
+        .job-ad-details {
+            font-size: 13px;
+            color: #6a737c;
+            margin-bottom: 12px;
+        }
+
+        .job-ad-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .job-ad-tag {
+            padding: 4px 8px;
+            background: #e1ecf4;
+            color: #39739d;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        /* Type 4: Native Content Ad */
+        .native-ad {
+            margin-bottom: 16px;
+        }
+
+        .native-ad-content {
+            padding: 16px;
+        }
+
+        .native-ad-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0a84ff;
+            margin-bottom: 10px;
+        }
+
+        .native-ad-text {
+            font-size: 14px;
+            color: #6a737c;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .native-ad-link {
+            color: #0a84ff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .native-ad-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Section Headers */
+        .section-header {
+            background: white;
+            border: 1px solid #d6d9dc;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #232629;
+        }
+
+        .section-header p {
+            color: #6a737c;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .banner-ad {
+                grid-column: 1;
+            }
+
+            .banner-ad-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Ad Disclosure */
+        .ad-disclosure {
+            background: #fff8dc;
+            border: 1px solid #f0e68c;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .ad-disclosure strong {
+            color: #333;
+        }
+
+        /* Code Block for Examples */
+        .code-section {
+            background: white;
+            border: 1px solid #d6d9dc;
+            border-radius: 4px;
+            padding: 24px;
+            margin-top: 48px;
+        }
+
+        .code-section h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #232629;
+        }
+
+        pre {
+            background: #f6f6f6;
+            border: 1px solid #e3e6e8;
+            border-radius: 4px;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #d73a49;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stack Overflow Ads - Implementation Examples</h1>
+        <p class="subtitle">Professional, non-intrusive ad patterns inspired by Stack Overflow's approach</p>
+
+        <div class="ad-disclosure">
+            <strong>About These Examples:</strong> These demonstrate Stack Overflow's clean, user-respectful ad patterns: clear labeling, non-intrusive placement, and professional design that maintains user experience.
+        </div>
+
+        <!-- Banner Ad Example -->
+        <div class="ad-container banner-ad">
+            <div class="ad-label">Sponsored</div>
+            <div class="banner-ad-content">
+                <div class="banner-ad-logo">AWS</div>
+                <div class="banner-ad-text">
+                    <div class="banner-ad-title">Build Scalable Applications with AWS</div>
+                    <div class="banner-ad-description">Get started with AWS Free Tier. Deploy your first application in minutes.</div>
+                </div>
+                <button class="banner-ad-button">Learn More</button>
+            </div>
+        </div>
+
+        <div class="layout">
+            <!-- Main Content -->
+            <div class="main-content">
+                <h2 class="question-title">How do I implement clean, non-intrusive ads?</h2>
+                <div class="question-body">
+                    <p>This page demonstrates Stack Overflow's approach to advertising:</p>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li style="margin-bottom: 8px;"><strong>Clear Disclosure:</strong> All ads labeled "Sponsored"</li>
+                        <li style="margin-bottom: 8px;"><strong>Professional Design:</strong> Consistent with site aesthetic</li>
+                        <li style="margin-bottom: 8px;"><strong>Non-Intrusive:</strong> No popups, autoplay, or flashy animations</li>
+                        <li style="margin-bottom: 8px;"><strong>Relevant Content:</strong> Tech-focused, developer-oriented</li>
+                        <li style="margin-bottom: 8px;"><strong>Performance:</strong> Lightweight, fast-loading</li>
+                    </ul>
+                </div>
+
+                <!-- Native Content Ad -->
+                <div class="ad-container native-ad">
+                    <div class="ad-label">Sponsored Content</div>
+                    <div class="native-ad-content">
+                        <div class="native-ad-title">5 Best Practices for API Design in 2026</div>
+                        <div class="native-ad-text">
+                            Learn how leading tech companies design scalable, developer-friendly APIs. 
+                            Includes real-world examples and common pitfalls to avoid.
+                        </div>
+                        <a href="#" class="native-ad-link">Read the full article →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar with Multiple Ad Types -->
+            <aside class="sidebar">
+                <!-- Sidebar Display Ad -->
+                <div class="ad-container sidebar-ad">
+                    <div class="ad-label">Sponsored</div>
+                    <div class="sidebar-ad-content">
+                        <div class="sidebar-ad-image">JetBrains</div>
+                        <div class="sidebar-ad-title">IntelliJ IDEA 2026</div>
+                        <div class="sidebar-ad-description">
+                            The most intelligent Java IDE. Now with AI-powered code completion and refactoring.
+                        </div>
+                        <a href="#" class="sidebar-ad-cta">Try Free</a>
+                    </div>
+                </div>
+
+                <!-- Job Listing Ad -->
+                <div class="ad-container job-ad">
+                    <div class="ad-label">Sponsored Job</div>
+                    <div class="job-ad-content">
+                        <div class="job-ad-header">
+                            <div class="job-ad-logo">G</div>
+                            <div class="job-ad-info">
+                                <div class="job-ad-title">Senior Full Stack Developer</div>
+                                <div class="job-ad-company">Google • Remote</div>
+                            </div>
+                        </div>
+                        <div class="job-ad-details">
+                            $150k-$220k • Full-time • San Francisco, CA or Remote
+                        </div>
+                        <div class="job-ad-tags">
+                            <span class="job-ad-tag">javascript</span>
+                            <span class="job-ad-tag">react</span>
+                            <span class="job-ad-tag">node.js</span>
+                            <span class="job-ad-tag">kubernetes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Sidebar Ad -->
+                <div class="ad-container sidebar-ad">
+                    <div class="ad-label">Sponsored</div>
+                    <div class="sidebar-ad-content">
+                        <div class="sidebar-ad-image">MongoDB</div>
+                        <div class="sidebar-ad-title">MongoDB Atlas</div>
+                        <div class="sidebar-ad-description">
+                            Database-as-a-service built for developers. Start free with 512MB storage.
+                        </div>
+                        <a href="#" class="sidebar-ad-cta">Get Started</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Implementation Guide -->
+        <div class="code-section">
+            <h2>🔧 Implementation Notes</h2>
+            <p style="color: #6a737c; margin-bottom: 20px;">Key principles for implementing Stack Overflow-style ads:</p>
+            
+            <h3 style="font-size: 16px; margin-top: 24px; margin-bottom: 12px; color: #232629;">1. HTML Structure</h3>
+            <pre><code>&lt;!-- Always wrap ads in clear container with disclosure --&gt;
+&lt;div class="ad-container"&gt;
+    &lt;div class="ad-label"&gt;Sponsored&lt;/div&gt;
+    &lt;div class="ad-content"&gt;
+        &lt;!-- Ad content here --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+            <h3 style="font-size: 16px; margin-top: 24px; margin-bottom: 12px; color: #232629;">2. CSS Best Practices</h3>
+            <pre><code>/* Subtle borders, clean design */
+.ad-container {
+    background: white;
+    border: 1px solid #d6d9dc;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+}
+
+.ad-container:hover {
+    border-color: #9fa6ad;  /* Subtle hover state */
+}
+
+/* Clear labeling */
+.ad-label {
+    font-size: 11px;
+    color: #9fa6ad;
+    text-transform: uppercase;
+    background: #f8f9f9;
+}</code></pre>
+
+            <h3 style="font-size: 16px; margin-top: 24px; margin-bottom: 12px; color: #232629;">3. Key Design Principles</h3>
+            <ul style="margin-left: 20px; color: #6a737c; line-height: 1.8;">
+                <li><strong>Always disclose:</strong> Use "Sponsored", "Ad", or "Sponsored Content" labels</li>
+                <li><strong>Match site design:</strong> Use site's color palette, typography, and spacing</li>
+                <li><strong>Non-intrusive:</strong> No animations, popups, or autoplay</li>
+                <li><strong>Lightweight:</strong> Optimize images, minimize DOM elements</li>
+                <li><strong>Accessible:</strong> Proper contrast ratios, keyboard navigation</li>
+                <li><strong>Responsive:</strong> Adapt gracefully to all screen sizes</li>
+            </ul>
+
+            <h3 style="font-size: 16px; margin-top: 24px; margin-bottom: 12px; color: #232629;">4. Integration with Google AdSense/Similar</h3>
+            <pre><code>&lt;!-- Wrap third-party ad code in your custom container --&gt;
+&lt;div class="ad-container sidebar-ad"&gt;
+    &lt;div class="ad-label"&gt;Sponsored&lt;/div&gt;
+    &lt;div class="ad-content"&gt;
+        &lt;!-- Google AdSense code here --&gt;
+        &lt;ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"&gt;&lt;/ins&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+            <h3 style="font-size: 16px; margin-top: 24px; margin-bottom: 12px; color: #232629;">5. Placement Guidelines</h3>
+            <ul style="margin-left: 20px; color: #6a737c; line-height: 1.8;">
+                <li><strong>Sidebar:</strong> 300x250px or 300x600px (standard IAB sizes)</li>
+                <li><strong>Banner:</strong> 728x90px or responsive width</li>
+                <li><strong>In-content:</strong> Between sections, not mid-paragraph</li>
+                <li><strong>Spacing:</strong> Minimum 16-24px from content</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Example: Track ad impressions (replace with your analytics)
+        document.querySelectorAll('.ad-container').forEach((ad, index) => {
+            // Track impression
+            console.log(`Ad ${index + 1} impression:`, {
+                type: ad.className.split(' ')[1] || 'generic',
+                position: ad.getBoundingClientRect().top
+            });
+
+            // Track clicks
+            ad.addEventListener('click', () => {
+                console.log(`Ad ${index + 1} clicked`);
+                // Send to analytics
+            });
+        });
+
+        // Example: Lazy load ads below the fold
+        if ('IntersectionObserver' in window) {
+            const adObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        console.log('Ad entered viewport:', entry.target);
+                        // Load ad content here
+                        adObserver.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '100px' });
+
+            document.querySelectorAll('.ad-container').forEach(ad => {
+                adObserver.observe(ad);
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+

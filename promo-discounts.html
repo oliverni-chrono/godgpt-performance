@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Promotion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #FE5706;
+            --color-background: #010100;
+            --color-surface: #1A1A1A;
+            --color-text-primary: #E6E6E6;
+            --color-text-secondary: #999999;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at top right, #331100 0%, #010100 60%);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            box-sizing: border-box;
+            position: relative;
+            justify-content: center;
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(254, 87, 6, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--color-text-secondary);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 380px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card.featured {
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 0 60px rgba(254, 87, 6, 0.15);
+            padding: 60px 30px;
+            transform: scale(1.1);
+            background: rgba(26, 26, 26, 0.6);
+            z-index: 10;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+        }
+
+        .old-price {
+            font-size: 28px;
+            color: var(--color-text-secondary);
+            text-decoration: line-through;
+            margin-bottom: 4px;
+        }
+
+        .new-price {
+            font-size: 84px;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 99px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .savings-highlight {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .best-value {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-primary);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 99px;
+            font-size: 16px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .big-savings-badge {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: black;
+            padding: 10px 32px;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container" id="slide">
+        <div class="glow"></div>
+        <h1 class="title">Limited Time Offer</h1>
+        <p class="subtitle">Upgrade your experience with exclusive savings.</p>
+
+        <div class="pricing-grid">
+            <!-- Weekly -->
+            <div class="card">
+                <div class="plan-name">Weekly</div>
+                <div class="price-container">
+                    <div class="old-price">$6</div>
+                    <div class="new-price">$5</div>
+                </div>
+                <div class="discount-badge">17% OFF</div>
+            </div>
+
+            <!-- Monthly -->
+            <div class="card">
+                <div class="plan-name">Monthly</div>
+                <div class="price-container">
+                    <div class="old-price">$20</div>
+                    <div class="new-price">$15</div>
+                </div>
+                <div class="discount-badge">25% OFF</div>
+            </div>
+
+            <!-- Annual -->
+            <div class="card featured">
+                <div class="best-value">MOST POPULAR</div>
+                <div class="plan-name">Annual</div>
+                <div class="price-container">
+                    <div class="old-price">$200</div>
+                    <div class="new-price">$150</div>
+                </div>
+                <div class="discount-badge">25% OFF</div>
+                <div class="savings-highlight">SAVE $50</div>
+                <div class="big-savings-badge">BIG SAVINGS</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

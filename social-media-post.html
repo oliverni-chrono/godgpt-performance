@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Post</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #FE5706;
+            --color-background: #010100;
+            --color-surface: #1A1A1A;
+        }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--color-background);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 1080px;
+            height: 1080px;
+            overflow: hidden;
+            color: white;
+        }
+        .container {
+            width: 1080px;
+            height: 1080px;
+            background: radial-gradient(circle at top right, #441a06 0%, #010100 70%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            position: relative;
+        }
+        .accent-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(254, 87, 6, 0.1) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            pointer-events: none;
+        }
+        .label {
+            color: var(--color-primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        .headline {
+            font-size: 96px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 80px;
+            letter-spacing: -0.04em;
+        }
+        .pricing-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            backdrop-filter: blur(10px);
+        }
+        .price-row.featured {
+            background: rgba(254, 87, 6, 0.1);
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 0 40px rgba(254, 87, 6, 0.2);
+            transform: scale(1.05);
+        }
+        .plan-info .name {
+            font-size: 32px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+        .plan-info .details {
+            font-size: 48px;
+            font-weight: 700;
+        }
+        .price-info {
+            text-align: right;
+        }
+        .old-price {
+            font-size: 32px;
+            color: #666;
+            text-decoration: line-through;
+            margin-bottom: 4px;
+        }
+        .new-price {
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+        }
+        .saving-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 12px;
+            display: inline-block;
+        }
+        .big-save {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: white;
+            color: black;
+            padding: 20px 40px;
+            border-radius: 20px;
+            font-size: 36px;
+            font-weight: 900;
+            transform: rotate(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .footer {
+            margin-top: 80px;
+            font-size: 24px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="accent-glow"></div>
+        <div class="big-save">SAVE $50</div>
+        
+        <div class="label">Limited Time</div>
+        <div class="headline">New Pricing<br>Is Here.</div>
+
+        <div class="pricing-list">
+            <!-- Weekly -->
+            <div class="price-row">
+                <div class="plan-info">
+                    <div class="name">Weekly Plan</div>
+                    <div class="details">Flexible access</div>
+                </div>
+                <div class="price-info">
+                    <div class="old-price">$6</div>
+                    <div class="new-price">$5</div>
+                </div>
+            </div>
+
+            <!-- Monthly -->
+            <div class="price-row">
+                <div class="plan-info">
+                    <div class="name">Monthly Plan</div>
+                    <div class="details">Best for starters</div>
+                </div>
+                <div class="price-info">
+                    <div class="old-price">$20</div>
+                    <div class="new-price">$15</div>
+                </div>
+            </div>
+
+            <!-- Annual -->
+            <div class="price-row featured">
+                <div class="plan-info">
+                    <div class="name">Annual Plan</div>
+                    <div class="details">Ultimate value</div>
+                </div>
+                <div class="price-info">
+                    <div class="old-price">$200</div>
+                    <div class="new-price">$150</div>
+                    <div class="saving-badge">25% OFF</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">Upgrade today. Save big.</div>
+    </div>
+</body>
+</html>
+

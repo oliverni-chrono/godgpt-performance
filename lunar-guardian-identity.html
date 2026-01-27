@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Galloping Guardian of the Lunar Tides</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #000814 0%, #001d3d 40%, #003566 100%);
+            position: relative;
+        }
+
+        /* Cosmic Stars Background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Moon */
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 40% 40%, #fdfcdc, #e0e0e0, #b8b8b8);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px rgba(253, 252, 220, 0.6),
+                0 0 80px rgba(253, 252, 220, 0.3),
+                inset -20px -20px 40px rgba(0, 0, 0, 0.2);
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 40px rgba(253, 252, 220, 0.6),
+                    0 0 80px rgba(253, 252, 220, 0.3),
+                    inset -20px -20px 40px rgba(0, 0, 0, 0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 60px rgba(253, 252, 220, 0.8),
+                    0 0 120px rgba(253, 252, 220, 0.5),
+                    inset -20px -20px 40px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Ocean/Water */
+        .ocean {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(180deg, 
+                rgba(0, 119, 182, 0.4) 0%,
+                rgba(0, 53, 102, 0.8) 50%,
+                rgba(0, 20, 40, 1) 100%);
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(100,200,255,0.2)"/></svg>');
+            background-repeat: repeat-x;
+            animation: waveMove 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation: waveMove 20s linear infinite reverse;
+            opacity: 0.5;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Horse Silhouette */
+        .horse-container {
+            position: absolute;
+            bottom: 30%;
+            left: 20%;
+            width: 600px;
+            height: 400px;
+            animation: gallop 3s ease-in-out infinite;
+        }
+
+        @keyframes gallop {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(30px); }
+        }
+
+        .horse {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 30px rgba(100, 200, 255, 0.8));
+        }
+
+        .horse-body {
+            position: absolute;
+            bottom: 40%;
+            left: 30%;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(135deg, 
+                rgba(100, 200, 255, 0.7),
+                rgba(50, 150, 255, 0.4));
+            border-radius: 60% 40% 40% 60% / 50% 50% 50% 50%;
+            transform: rotate(-10deg);
+        }
+
+        .horse-neck {
+            position: absolute;
+            bottom: 50%;
+            left: 15%;
+            width: 80px;
+            height: 150px;
+            background: linear-gradient(180deg, 
+                rgba(100, 200, 255, 0.6),
+                rgba(50, 150, 255, 0.3));
+            border-radius: 40%;
+            transform: rotate(25deg);
+        }
+
+        .horse-head {
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 90px;
+            height: 100px;
+            background: linear-gradient(135deg, 
+                rgba(120, 220, 255, 0.8),
+                rgba(80, 180, 255, 0.5));
+            border-radius: 45% 55% 40% 60% / 50% 50% 50% 50%;
+        }
+
+        /* Mane - Flowing water effect */
+        .mane {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 200px;
+            height: 150px;
+        }
+
+        .mane-strand {
+            position: absolute;
+            width: 4px;
+            height: 100px;
+            background: linear-gradient(180deg, 
+                rgba(150, 220, 255, 0.8),
+                rgba(100, 200, 255, 0.3),
+                transparent);
+            border-radius: 50%;
+            animation: maneFlow 2s ease-in-out infinite;
+        }
+
+        .mane-strand:nth-child(1) { left: 0; animation-delay: 0s; }
+        .mane-strand:nth-child(2) { left: 20px; animation-delay: 0.2s; }
+        .mane-strand:nth-child(3) { left: 40px; animation-delay: 0.4s; }
+        .mane-strand:nth-child(4) { left: 60px; animation-delay: 0.6s; }
+        .mane-strand:nth-child(5) { left: 80px; animation-delay: 0.8s; }
+
+        @keyframes maneFlow {
+            0%, 100% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(-10px) scaleY(1.2); }
+        }
+
+        /* Shell Armor - Cancer symbol */
+        .shell-armor {
+            position: absolute;
+            bottom: 45%;
+            left: 35%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, 
+                rgba(255, 200, 100, 0.4),
+                rgba(255, 150, 50, 0.2));
+            border: 2px solid rgba(255, 180, 80, 0.6);
+            border-radius: 50% 50% 45% 45%;
+            animation: armorPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes armorPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Legs */
+        .leg {
+            position: absolute;
+            width: 15px;
+            height: 100px;
+            background: linear-gradient(180deg, 
+                rgba(80, 180, 255, 0.6),
+                rgba(50, 150, 255, 0.3));
+            border-radius: 8px;
+            bottom: 15%;
+        }
+
+        .leg-1 { left: 32%; animation: legMove1 0.8s ease-in-out infinite; }
+        .leg-2 { left: 38%; animation: legMove2 0.8s ease-in-out infinite; }
+        .leg-3 { left: 44%; animation: legMove3 0.8s ease-in-out infinite; }
+        .leg-4 { left: 50%; animation: legMove4 0.8s ease-in-out infinite; }
+
+        @keyframes legMove1 {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        @keyframes legMove2 {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-20deg); }
+        }
+
+        @keyframes legMove3 {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+
+        @keyframes legMove4 {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-15deg); }
+        }
+
+        /* Cosmic particles */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(150, 220, 255, 0.8);
+            border-radius: 50%;
+            animation: particleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-200px) translateX(50px); opacity: 0; }
+        }
+
+        /* Text Overlay */
+        .identity-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #fdfcdc;
+            z-index: 100;
+        }
+
+        .identity-text h1 {
+            font-size: 48px;
+            font-weight: 700;
+            text-shadow: 
+                0 0 20px rgba(100, 200, 255, 0.8),
+                0 0 40px rgba(100, 200, 255, 0.4);
+            margin-bottom: 16px;
+        }
+
+        .identity-text p {
+            font-size: 20px;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Numerology Symbol */
+        .numerology-nine {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            font-size: 120px;
+            font-weight: 700;
+            color: rgba(255, 200, 100, 0.3);
+            text-shadow: 0 0 30px rgba(255, 200, 100, 0.5);
+            animation: symbolPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes symbolPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Numerology Symbol -->
+    <div class="numerology-nine">9</div>
+
+    <!-- Moon -->
+    <div class="moon"></div>
+
+    <!-- Ocean -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Horse -->
+    <div class="horse-container">
+        <div class="horse">
+            <!-- Legs -->
+            <div class="leg leg-1"></div>
+            <div class="leg leg-2"></div>
+            <div class="leg leg-3"></div>
+            <div class="leg leg-4"></div>
+            
+            <!-- Body -->
+            <div class="horse-body"></div>
+            
+            <!-- Shell Armor -->
+            <div class="shell-armor"></div>
+            
+            <!-- Neck -->
+            <div class="horse-neck"></div>
+            
+            <!-- Head -->
+            <div class="horse-head"></div>
+            
+            <!-- Mane -->
+            <div class="mane">
+                <div class="mane-strand"></div>
+                <div class="mane-strand"></div>
+                <div class="mane-strand"></div>
+                <div class="mane-strand"></div>
+                <div class="mane-strand"></div>
+            </div>
+        </div>
+        
+        <!-- Particles -->
+        <div class="particle" style="bottom: 50%; left: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="bottom: 45%; left: 30%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="bottom: 55%; left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="bottom: 50%; left: 50%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="bottom: 60%; left: 35%; animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Identity Text -->
+    <div class="identity-text">
+        <h1>The Galloping Guardian of the Lunar Tides</h1>
+        <p>Cancer ☽ • Numerology 27/9 • Horse 馬</p>
+    </div>
+
+    <script>
+        // Generate random stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.opacity = Math.random() * 0.7 + 0.3;
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>
+

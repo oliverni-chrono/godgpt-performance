@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GodGPT Performance Overview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #FE5706;
+            --color-secondary: #FFA147;
+            --color-background: #010100;
+            --color-surface: #1A1A1A;
+            --color-text-primary: #E6E6E6;
+            --color-text-secondary: #999999;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            --radius-card: 16px;
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-2xl);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .header h1 {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 24px;
+            text-shadow: 0 2px 8px rgba(254, 87, 6, 0.3);
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .tagline a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .tagline a:hover {
+            color: var(--color-secondary);
+            text-decoration: underline;
+        }
+
+        /* Links Section */
+        .links-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .link-item {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: 28px 40px;
+            box-shadow: var(--shadow-card);
+            border: 2px solid rgba(254, 87, 6, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .link-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(254, 87, 6, 0.3);
+            border-color: var(--color-primary);
+            background: rgba(254, 87, 6, 0.05);
+        }
+
+        .link-item:active {
+            transform: translateX(6px) scale(0.98);
+        }
+
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            text-align: left;
+        }
+
+        .link-icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+
+        .link-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .link-arrow {
+            font-size: 28px;
+            color: var(--color-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .link-item:hover .link-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: var(--spacing-3xl);
+            padding-top: var(--spacing-xl);
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(254, 87, 6, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 40px;
+            }
+
+            .tagline {
+                font-size: 16px;
+            }
+
+            .link-item {
+                padding: 20px 24px;
+            }
+
+            .link-text {
+                font-size: 18px;
+            }
+
+            .link-icon {
+                font-size: 24px;
+            }
+
+            .link-arrow {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>GodGPT Performance Overview</h1>
+            <p class="tagline">
+                Your spiritual guidance starts here: 
+                <a href="https://godgpt.fun/en" target="_blank" rel="noopener noreferrer">https://godgpt.fun/en</a>
+            </p>
+        </header>
+
+        <div class="links-section">
+            <!-- Creative Performance -->
+            <a href="creative-performance.html" class="link-item">
+                <div class="link-content">
+                    <span class="link-icon">🎨</span>
+                    <span class="link-text">Creative Performance</span>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+
+            <!-- Weekly Ads Plan -->
+            <a href="weekly-plan.html" class="link-item">
+                <div class="link-content">
+                    <span class="link-icon">📅</span>
+                    <span class="link-text">Weekly Ads Plan</span>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+
+            <!-- User Profile Analysis -->
+            <a href="user-profile-analysis.html" class="link-item">
+                <div class="link-content">
+                    <span class="link-icon">📊</span>
+                    <span class="link-text">User Profile Analysis</span>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+                </div>
+
+        <footer class="footer">
+            <p>Created with 🌌 cosmic energy · 2025</p>
+            <!-- Updated: 2025-12-30 -->
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Analysis</title>
+    <style>
+        :root {
+            /* Brand Colors */
+            --color-primary: #FE5706;
+            --color-secondary: #FFA147;
+            --color-background: #010100;
+            --color-surface: #1A1A1A;
+            --color-text-primary: #E6E6E6;
+            --color-text-secondary: #999999;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Border Radius */
+            --radius-button: 12px;
+            --radius-card: 16px;
+            --radius-input: 10px;
+            
+            /* Button States */
+            --button-pressed-opacity: 0.8;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(254, 87, 6, 0.3);
+            --shadow-card: 0 4px 12px rgba(254, 87, 6, 0.2);
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 48px;
+            --font-size-5xl: 64px;
+            
+            /* Animation */
+            --animation-fast: 150ms;
+            --animation-normal: 300ms;
+            --animation-slow: 500ms;
+            --easing-primary: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide-container {
+            scroll-snap-type: x mandatory;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slide {
+            scroll-snap-align: start;
+            min-width: 100vw;
+            min-height: 100vh;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            flex-shrink: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Slide 1: Summary */
+        .slide-1 {
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+        }
+
+        .slide-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(254, 87, 6, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .slide-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-subtitle {
+            font-size: var(--font-size-2xl);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-3xl);
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            max-width: 1200px;
+            width: 100%;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .stat-card {
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: var(--radius-card);
+            padding: 40px var(--spacing-xl);
+            border: 1px solid rgba(254, 87, 6, 0.2);
+            transition: all var(--animation-normal) var(--easing-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(254, 87, 6, 0.5);
+            box-shadow: var(--shadow-card);
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-detail {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+        }
+
+        /* Slide 2: Geographic Breakdown */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f0f0f 0%, var(--color-surface) 100%);
+        }
+
+        .geographic-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+            align-items: center;
+        }
+
+        .country-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px var(--spacing-lg);
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: var(--radius-button);
+            border-left: 4px solid var(--color-primary);
+            transition: all var(--animation-normal) var(--easing-primary);
+        }
+
+        .country-item:hover {
+            background: rgba(26, 26, 26, 0.9);
+            transform: translateX(8px);
+        }
+
+        .country-rank {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-right: var(--spacing-md);
+            min-width: 40px;
+        }
+
+        .country-name {
+            font-size: 20px;
+            font-weight: 600;
+            flex: 1;
+            color: var(--color-text-primary);
+        }
+
+        .country-count {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .country-percentage {
+            font-size: var(--font-size-sm);
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .country-bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .bar-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-base);
+            color: var(--color-text-primary);
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 32px;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 16px;
+            transition: width 1s var(--easing-primary);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        .bar-stacked {
+            display: flex;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .bar-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .bar-segment:last-child {
+            border-right: none;
+        }
+
+        .bar-segment:hover {
+            filter: brightness(1.2);
+            z-index: 10;
+        }
+
+        .bar-segment-tooltip {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .bar-segment:hover .bar-segment-tooltip {
+            opacity: 1;
+        }
+
+        /* Slide 3: Demographics Breakdown */
+        .slide-3 {
+            background: linear-gradient(135deg, var(--color-surface) 0%, #0f0f0f 100%);
+        }
+
+        .demographics-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+
+        .demo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--color-primary);
+        }
+
+        .pie-chart {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .gender-chart {
+            background: conic-gradient(
+                var(--color-primary) 0deg 209deg,
+                var(--color-secondary) 209deg 360deg
+            );
+            box-shadow: var(--shadow-lg);
+        }
+
+        .age-bars {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .age-bar-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .age-label {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--color-text-primary);
+        }
+
+        .age-bar-container {
+            flex: 1;
+            height: 40px;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .age-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 20px;
+            transition: width 1s var(--easing-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: var(--font-size-base);
+        }
+
+        /* Slide 3 Panel Animations */
+        .slide-3-panel {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .slide-3-panel.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-3-panel-right {
+            transform: translateX(40px);
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            width: 100%;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 20px;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: var(--spacing-sm);
+        }
+
+        .legend-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+
+        .legend-text {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .legend-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Navigation */
+        .slide-nav {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: row;
+            gap: var(--spacing-md);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(254, 87, 6, 0.3);
+            cursor: pointer;
+            transition: all var(--animation-normal) var(--easing-primary);
+        }
+
+        .nav-dot.active {
+            background: var(--color-primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px var(--spacing-xl);
+                overflow-y: auto;
+            }
+
+            .slide-title {
+                font-size: var(--font-size-4xl);
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .geographic-content,
+            .demographics-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .slide-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(26, 26, 26, 0.3);
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: rgba(254, 87, 6, 0.5);
+            border-radius: 3px;
+        }
+
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container" id="slideContainer">
+        <!-- Slide 1: Summary -->
+        <div class="slide slide-1" data-slide="1">
+            <h1 class="slide-title">User Profile Analysis</h1>
+            <p class="slide-subtitle">Global User Demographics Overview</p>
+            
+            <div class="summary-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-number">41K+</div>
+                    <div class="stat-detail">Across 100+ countries</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Primary Market</div>
+                    <div class="stat-number">APAC</div>
+                    <div class="stat-detail">62% of user base</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Core Demographic</div>
+                    <div class="stat-number">25-44</div>
+                    <div class="stat-detail">66% age concentration</div>
+                </div>
+            </div>
+
+            <div class="summary-grid" style="margin-top: 32px;">
+                <div class="stat-card">
+                    <div class="stat-label">Gender Split</div>
+                    <div class="stat-number">58% M</div>
+                    <div class="stat-detail">42% Female / 58% Male</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Top Country</div>
+                    <div class="stat-number">🇮🇩 ID</div>
+                    <div class="stat-detail">5,028 users (19%)</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">User → Subscriber CVR</div>
+                    <div class="stat-number">Low</div>
+                    <div class="stat-detail">0.4%</div>
+                </div>
+            </div>
+
+            <div class="slide-number">01 / 08</div>
+        </div>
+
+        <!-- Slide 2: Geographic Breakdown -->
+        <div class="slide slide-2" data-slide="2" style="padding-top: 250px;">
+            <h2 class="slide-title">Geographic Distribution</h2>
+            <p class="slide-subtitle">Regional Breakdown by Continent & Market</p>
+            
+            <div class="geographic-content">
+                <div class="country-list">
+                    <div class="country-item">
+                        <span class="country-rank">#1</span>
+                        <span class="country-name">🇮🇩 Indonesia</span>
+                        <div class="country-count">
+                            <span>5,028</span>
+                            <span class="country-percentage">12.3%</span>
+                        </div>
+                    </div>
+                    <div class="country-item">
+                        <span class="country-rank">#2</span>
+                        <span class="country-name">🇺🇸 United States</span>
+                        <div class="country-count">
+                            <span>3,951</span>
+                            <span class="country-percentage">9.6%</span>
+                        </div>
+                    </div>
+                    <div class="country-item">
+                        <span class="country-rank">#3</span>
+                        <span class="country-name">🇪🇺 European Union</span>
+                        <div class="country-count">
+                            <span>3,847</span>
+                            <span class="country-percentage">9.4%</span>
+                        </div>
+                    </div>
+                    <div class="country-item">
+                        <span class="country-rank">#4</span>
+                        <span class="country-name">🇵🇭 Philippines</span>
+                        <div class="country-count">
+                            <span>2,869</span>
+                            <span class="country-percentage">7.0%</span>
+                        </div>
+                    </div>
+                    <div class="country-item">
+                        <span class="country-rank">#5</span>
+                        <span class="country-name">🇭🇰 Hong Kong</span>
+                        <div class="country-count">
+                            <span>1,382</span>
+                            <span class="country-percentage">3.4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="country-bar-chart">
+                    <!-- Southeast Asia -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌏 Southeast Asia</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">23.8%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 100%;">
+                                <div class="bar-segment" style="width: 51.5%; background: #FE5706;">
+                                    ID
+                                    <div class="bar-segment-tooltip">🇮🇩 Indonesia: 12.3%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 29.4%; background: #FE7020;">
+                                    PH
+                                    <div class="bar-segment-tooltip">🇵🇭 Philippines: 7.0%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 12.6%; background: #FE8939;">
+                                    MY
+                                    <div class="bar-segment-tooltip">🇲🇾 Malaysia: 3.0%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 6.5%; background: #FFA147;">
+                                    SG+
+                                    <div class="bar-segment-tooltip">🇸🇬 Singapore & Others: 1.5%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- East Asia -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌏 East Asia</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">11.7%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 49%;">
+                                <div class="bar-segment" style="width: 27.4%; background: #FE5706;">
+                                    CN
+                                    <div class="bar-segment-tooltip">🇨🇳 China: 3.2%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 29.1%; background: #FE7020;">
+                                    HK
+                                    <div class="bar-segment-tooltip">🇭🇰 Hong Kong: 3.4%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 26.5%; background: #FE8939;">
+                                    TW
+                                    <div class="bar-segment-tooltip">🇹🇼 Taiwan: 3.1%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 17%; background: #FFA147;">
+                                    JP+KR
+                                    <div class="bar-segment-tooltip">🇯🇵🇰🇷 Japan, Korea & Others: 2.0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- North America -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌎 North America</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">10.3%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 43%;">
+                                <div class="bar-segment" style="width: 93.2%; background: #FE5706;">
+                                    US
+                                    <div class="bar-segment-tooltip">🇺🇸 United States: 9.6%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 6.8%; background: #FE8939;">
+                                    CA+MX
+                                    <div class="bar-segment-tooltip">🇨🇦🇲🇽 Canada & Mexico: 0.7%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- European Union -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🇪🇺 European Union</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">9.4%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 39%;">
+                                <div class="bar-segment" style="width: 21.3%; background: #FE5706;">
+                                    FR
+                                    <div class="bar-segment-tooltip">🇫🇷 France: 2.0%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 19.1%; background: #FE6515;">
+                                    DE
+                                    <div class="bar-segment-tooltip">🇩🇪 Germany: 1.8%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 17.0%; background: #FE7525;">
+                                    IT
+                                    <div class="bar-segment-tooltip">🇮🇹 Italy: 1.6%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 14.9%; background: #FE8535;">
+                                    ES
+                                    <div class="bar-segment-tooltip">🇪🇸 Spain: 1.4%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 27.7%; background: #FFA147;">
+                                    Others
+                                    <div class="bar-segment-tooltip">Other EU countries: 2.6%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Africa -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌍 Africa</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">8.5%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 36%;">
+                                <div class="bar-segment" style="width: 25%; background: #FE5706;">
+                                    NG
+                                    <div class="bar-segment-tooltip">🇳🇬 Nigeria: 2.1%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 20%; background: #FE6515;">
+                                    ZA
+                                    <div class="bar-segment-tooltip">🇿🇦 South Africa: 1.7%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 18%; background: #FE7525;">
+                                    KE
+                                    <div class="bar-segment-tooltip">🇰🇪 Kenya: 1.5%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 15%; background: #FE8535;">
+                                    EG
+                                    <div class="bar-segment-tooltip">🇪🇬 Egypt: 1.3%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 22%; background: #FFA147;">
+                                    Others
+                                    <div class="bar-segment-tooltip">Other African countries: 1.9%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- South Asia -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌏 South Asia</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">6.8%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 29%;">
+                                <div class="bar-segment" style="width: 44%; background: #FE5706;">
+                                    IN
+                                    <div class="bar-segment-tooltip">🇮🇳 India: 3.0%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 26%; background: #FE7020;">
+                                    PK
+                                    <div class="bar-segment-tooltip">🇵🇰 Pakistan: 1.8%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 21%; background: #FE8939;">
+                                    BD
+                                    <div class="bar-segment-tooltip">🇧🇩 Bangladesh: 1.4%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 9%; background: #FFA147;">
+                                    LK+
+                                    <div class="bar-segment-tooltip">🇱🇰 Sri Lanka & Others: 0.6%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Latin America -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌎 Latin America</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">4.2%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 18%;">
+                                <div class="bar-segment" style="width: 45%; background: #FE5706;">
+                                    BR
+                                    <div class="bar-segment-tooltip">🇧🇷 Brazil: 1.9%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 28%; background: #FE7020;">
+                                    MX
+                                    <div class="bar-segment-tooltip">🇲🇽 Mexico: 1.2%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 27%; background: #FE8939;">
+                                    Others
+                                    <div class="bar-segment-tooltip">Argentina, Chile & Others: 1.1%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle East -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌍 Middle East</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">3.7%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 16%;">
+                                <div class="bar-segment" style="width: 32%; background: #FE5706;">
+                                    TR
+                                    <div class="bar-segment-tooltip">🇹🇷 Turkey: 1.2%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 27%; background: #FE6515;">
+                                    SA
+                                    <div class="bar-segment-tooltip">🇸🇦 Saudi Arabia: 1.0%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 22%; background: #FE7525;">
+                                    AE
+                                    <div class="bar-segment-tooltip">🇦🇪 UAE: 0.8%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 19%; background: #FE8939;">
+                                    IR+
+                                    <div class="bar-segment-tooltip">🇮🇷 Iran & Others: 0.7%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Oceania -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌏 Oceania</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">1.2%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 5%;">
+                                <div class="bar-segment" style="width: 75%; background: #FE5706;">
+                                    AU
+                                    <div class="bar-segment-tooltip">🇦🇺 Australia: 0.9%</div>
+                                </div>
+                                <div class="bar-segment" style="width: 25%; background: #FE8939;">
+                                    NZ+
+                                    <div class="bar-segment-tooltip">🇳🇿 New Zealand & Others: 0.3%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Regions -->
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>🌐 Other Regions</span>
+                            <span style="color: var(--color-secondary); font-weight: 700;">20.4%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-stacked" style="width: 86%;">
+                                <div class="bar-segment" style="width: 100%; background: linear-gradient(90deg, #FE5706, #FFA147);">
+                                    Mixed
+                                    <div class="bar-segment-tooltip">Various smaller markets worldwide</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">02 / 08</div>
+        </div>
+
+        <!-- Slide 3: Demographics Breakdown -->
+        <div class="slide slide-3" data-slide="3" style="padding-top: 250px;">
+            <h2 class="slide-title">Demographics Breakdown</h2>
+            <p class="slide-subtitle">Gender, Platform & Age Distribution</p>
+            
+            <div style="max-width: 1400px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px;">
+                <!-- Left Half: Gender and Platform Split Stacked -->
+                <div class="slide-3-panel" style="display: flex; flex-direction: column; gap: 48px;">
+                    <!-- Gender Section -->
+                    <div class="demo-section">
+                        <h3 class="section-title">Gender Split</h3>
+                        <div class="pie-chart gender-chart" style="position: relative;">
+                            <div style="position: absolute; top: 50%; right: 25%; transform: translate(50%, -50%); text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">58%</div>
+                                <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">Male</div>
+                            </div>
+                            <div style="position: absolute; top: 50%; left: 35%; transform: translate(-50%, -50%); text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">42%</div>
+                                <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">Female</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Section -->
+                    <div class="demo-section">
+                        <h3 class="section-title">Platform Split</h3>
+                        <div class="pie-chart platform-chart" style="position: relative; background: conic-gradient(from 0deg, var(--color-primary) 0% 55%, var(--color-secondary) 55% 90%, #999999 90% 100%);">
+                            <!-- Web app label (largest segment, top-right) -->
+                            <div style="position: absolute; top: 35%; right: 20%; transform: translate(0%, -50%); text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">55%</div>
+                                <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">Web app</div>
+                            </div>
+                            <!-- Android label (smallest segment, grey section) -->
+                            <div style="position: absolute; top: 10%; left: 35%; transform: translate(-50%, -50%); text-align: center;">
+                                <div style="font-size: 18px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">8%</div>
+                                <div style="font-size: 10px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 2px;">Android</div>
+                            </div>
+                            <!-- iOS label (second segment, left side) -->
+                            <div style="position: absolute; bottom: 30%; left: 25%; transform: translate(-50%, 0%); text-align: center;">
+                                <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">35%</div>
+                                <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">iOS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Half: Age Distribution -->
+                <div class="demo-section slide-3-panel slide-3-panel-right">
+                    <h3 class="section-title">Age Distribution</h3>
+                    <div class="age-bars">
+                        <div class="age-bar-item">
+                            <span class="age-label">18-24</span>
+                            <div class="age-bar-container">
+                                <div class="age-bar-fill" style="width: 26%;">9%</div>
+                            </div>
+                        </div>
+                        <div class="age-bar-item">
+                            <span class="age-label">25-34</span>
+                            <div class="age-bar-container">
+                                <div class="age-bar-fill" style="width: 100%;">35%</div>
+                            </div>
+                        </div>
+                        <div class="age-bar-item">
+                            <span class="age-label">35-44</span>
+                            <div class="age-bar-container">
+                                <div class="age-bar-fill" style="width: 89%;">31%</div>
+                            </div>
+                        </div>
+                        <div class="age-bar-item">
+                            <span class="age-label">45-54</span>
+                            <div class="age-bar-container">
+                                <div class="age-bar-fill" style="width: 49%;">17%</div>
+                            </div>
+                        </div>
+                        <div class="age-bar-item">
+                            <span class="age-label">55+</span>
+                            <div class="age-bar-container">
+                                <div class="age-bar-fill" style="width: 23%;">8%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 48px; padding: var(--spacing-lg); background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-button); border-left: 4px solid var(--color-primary);">
+                        <div style="font-size: var(--font-size-base); color: var(--color-text-secondary); margin-bottom: var(--spacing-sm);">KEY INSIGHT</div>
+                        <div style="font-size: 20px; font-weight: 600; color: var(--color-text-primary);">66% of users fall in the 25-44 age range, representing the core working professional demographic</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">03 / 08</div>
+        </div>
+
+        <!-- Slide 4: Subscription Plans -->
+        <div class="slide slide-1" data-slide="4">
+            <h2 class="slide-title">Subscription Plans</h2>
+            <p class="slide-subtitle">Active Plan Distribution</p>
+            
+            <div class="summary-grid" style="max-width: 900px;">
+                <div class="stat-card">
+                    <div class="stat-label">Most Popular</div>
+                    <div class="stat-number" style="font-size: 32px;">weekly_premium</div>
+                    <div class="stat-detail">($6) - 152 subscribers (46%)</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Total Subscriptions</div>
+                    <div class="stat-number">330</div>
+                    <div class="stat-detail"></div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Ultimate Plans</div>
+                    <div class="stat-number">3%</div>
+                    <div class="stat-detail">10 ultimate subscribers</div>
+                </div>
+            </div>
+
+            <div style="max-width: 900px; width: 100%; margin-top: 64px;">
+                <div class="age-bars">
+                    <div class="age-bar-item">
+                        <span class="age-label" style="min-width: 300px; font-size: 18px;">weekly_premium ($6)</span>
+                        <div class="age-bar-container" style="position: relative;">
+                            <div class="age-bar-fill" style="width: 46%; justify-content: flex-start; padding-left: 16px;"></div>
+                            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">152 | 46%</div>
+                        </div>
+                    </div>
+                    <div class="age-bar-item">
+                        <span class="age-label" style="min-width: 300px; font-size: 18px;">monthly_premium ($20)</span>
+                        <div class="age-bar-container" style="position: relative;">
+                            <div class="age-bar-fill" style="width: 42%; justify-content: flex-start; padding-left: 16px;"></div>
+                            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">139 | 42%</div>
+                        </div>
+                    </div>
+                    <div class="age-bar-item">
+                        <span class="age-label" style="min-width: 300px; font-size: 18px;">annual_premium ($200)</span>
+                        <div class="age-bar-container" style="position: relative;">
+                            <div class="age-bar-fill" style="width: 9%; justify-content: flex-start; padding-left: 16px;"></div>
+                            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">29 | 9%</div>
+                        </div>
+                    </div>
+                    <div class="age-bar-item">
+                        <span class="age-label" style="min-width: 300px; font-size: 18px;">Ultimate_plan</span>
+                        <div class="age-bar-container" style="position: relative;">
+                            <div class="age-bar-fill" style="width: 3%; justify-content: flex-start; padding-left: 16px;"></div>
+                            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">10 | 3%</div>
+                        </div>
+                    </div>
+                    <div class="age-bar-item">
+                        <span class="age-label" style="min-width: 300px; font-size: 18px;">New tier - God model ($888)</span>
+                        <div class="age-bar-container" style="position: relative;">
+                            <div class="age-bar-fill" style="width: 0%; justify-content: flex-start; padding-left: 16px; background: #000000;"></div>
+                            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">0 | 0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">04 / 08</div>
+        </div>
+
+        <!-- Slide 5: Subscription Behavior -->
+        <div class="slide slide-2" data-slide="5">
+            <h2 class="slide-title">Subscription Behavior</h2>
+            <p class="slide-subtitle">Frequency & Repeat Purchase Patterns</p>
+            
+            <div class="demographics-content">
+                <!-- Subscription Frequency -->
+                <div class="demo-section">
+                    <h3 class="section-title">Subscription Frequency</h3>
+                    <div style="width: 100%; margin-top: 32px;">
+                        <div class="age-bars">
+                            <div class="age-bar-item">
+                                <span class="age-label" style="min-width: 100px;">1 time</span>
+                                <div class="age-bar-container" style="position: relative;">
+                                    <div class="age-bar-fill" style="width: 100%; justify-content: flex-start; padding-left: 16px;"></div>
+                                    <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">222 | 86%</div>
+                                </div>
+                            </div>
+                            <div class="age-bar-item">
+                                <span class="age-label" style="min-width: 100px;">2 times</span>
+                                <div class="age-bar-container" style="position: relative;">
+                                    <div class="age-bar-fill" style="width: 9.5%; justify-content: flex-start; padding-left: 16px;"></div>
+                                    <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">21 | 8%</div>
+                                </div>
+                            </div>
+                            <div class="age-bar-item">
+                                <span class="age-label" style="min-width: 100px;">3 times</span>
+                                <div class="age-bar-container" style="position: relative;">
+                                    <div class="age-bar-fill" style="width: 2.7%; justify-content: flex-start; padding-left: 16px;"></div>
+                                    <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">6 | 2%</div>
+                                </div>
+                            </div>
+                            <div class="age-bar-item">
+                                <span class="age-label" style="min-width: 100px;">>3 times</span>
+                                <div class="age-bar-container" style="position: relative;">
+                                    <div class="age-bar-fill" style="width: 4%; justify-content: flex-start; padding-left: 16px;"></div>
+                                    <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; font-weight: 700; color: var(--color-text-primary);">9 | 4%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 48px; padding: var(--spacing-lg); background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-button); border-left: 4px solid var(--color-primary);">
+                        <div style="font-size: var(--font-size-base); color: var(--color-text-secondary); margin-bottom: var(--spacing-sm);">INSIGHT</div>
+                        <div style="font-size: 18px; font-weight: 600; color: var(--color-text-primary);">86% are first-time subscribers, indicating strong acquisition but retention opportunity</div>
+                    </div>
+                </div>
+
+                <!-- Repeat Purchase -->
+                <div class="demo-section">
+                    <h3 class="section-title">Repeat Purchase</h3>
+                    <div class="pie-chart" style="background: conic-gradient(var(--color-primary) 0deg 50deg, var(--color-secondary) 50deg 360deg); box-shadow: var(--shadow-lg); position: relative;">
+                        <div style="position: absolute; top: 20%; left: 55%; transform: translate(-50%, -50%); text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">14%</div>
+                            <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">Yes</div>
+                        </div>
+                        <div style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                            <div style="font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">86%</div>
+                            <div style="font-size: 12px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 4px;">No</div>
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-label">
+                                <div class="legend-color" style="background: var(--color-secondary);"></div>
+                                <span class="legend-text">No Repeat</span>
+                            </div>
+                            <span class="legend-value">86%</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-label">
+                                <div class="legend-color" style="background: var(--color-primary);"></div>
+                                <span class="legend-text">Repeat Purchase</span>
+                            </div>
+                            <span class="legend-value">14%</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px; padding: var(--spacing-lg); background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-button); border-left: 4px solid var(--color-primary);">
+                        <div style="font-size: var(--font-size-base); color: var(--color-text-secondary); margin-bottom: var(--spacing-sm);">OPPORTUNITY</div>
+                        <div style="font-size: 18px; font-weight: 600; color: var(--color-text-primary);">14% repeat rate suggests high retention potential with proper engagement</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">05 / 08</div>
+        </div>
+
+        <!-- Slide 6: Upgrade Paths -->
+        <div class="slide slide-3" data-slide="6" style="padding-top: 250px;">
+            <h2 class="slide-title">Upgrade Behavior</h2>
+            <p class="slide-subtitle">User Upgrade Journey</p>
+            
+            <div style="max-width: 1000px; width: 100%;">
+                <div class="summary-grid" style="margin-bottom: 64px;">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Upgrades</div>
+                        <div class="stat-number">20</div>
+                        <div class="stat-detail">Users who upgraded</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Top Path</div>
+                        <div class="stat-number">W→M</div>
+                        <div class="stat-detail">Weekly to Monthly (80%)</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Ultimate Upgrade</div>
+                        <div class="stat-number">10%</div>
+                        <div class="stat-detail">2 users to ultimate plans</div>
+                    </div>
+                </div>
+
+                <!-- Upgrade Flow Visualization -->
+                <div style="display: flex; flex-direction: column; gap: 32px; margin-top: 48px;">
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-primary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">FROM</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Weekly $6</div>
+                        </div>
+                        <div style="font-size: 48px; color: var(--color-primary);">→</div>
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-secondary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">TO</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Monthly $20</div>
+                        </div>
+                        <div style="min-width: 120px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: var(--color-primary);">16</div>
+                            <div style="font-size: 14px; color: var(--color-text-secondary);">users (80%)</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-primary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">FROM</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Monthly $20</div>
+                        </div>
+                        <div style="font-size: 48px; color: var(--color-primary);">→</div>
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-secondary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">TO</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Annual $200</div>
+                        </div>
+                        <div style="min-width: 120px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: var(--color-primary);">2</div>
+                            <div style="font-size: 14px; color: var(--color-text-secondary);">users (10%)</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-primary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">FROM</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Weekly $6</div>
+                        </div>
+                        <div style="font-size: 48px; color: var(--color-primary);">→</div>
+                        <div style="flex: 1; text-align: center; padding: 24px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border: 2px solid var(--color-secondary);">
+                            <div style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">TO</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--color-text-primary);">Weekly Ultimate</div>
+                        </div>
+                        <div style="min-width: 120px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: var(--color-primary);">2</div>
+                            <div style="font-size: 14px; color: var(--color-text-secondary);">users (10%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 48px; padding: var(--spacing-lg); background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-button); border-left: 4px solid var(--color-primary);">
+                    <div style="font-size: var(--font-size-base); color: var(--color-text-secondary); margin-bottom: var(--spacing-sm);">KEY INSIGHT</div>
+                    <div style="font-size: 20px; font-weight: 600; color: var(--color-text-primary);">Most upgrades happen from Weekly to Monthly plans, suggesting users test with weekly before committing to longer terms</div>
+                </div>
+            </div>
+
+            <div class="slide-number">06 / 08</div>
+        </div>
+
+        <!-- Slide 7: Sentiment Analysis -->
+        <div class="slide slide-2" data-slide="7" style="padding-top: 120px;">
+            <h2 class="slide-title">User Sentiment and Profiling</h2>
+            <p class="slide-subtitle">What Users Love & What Needs Improvement</p>
+            
+            <div style="max-width: 1400px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px;">
+                <!-- Left Half: Positive and Negative Sentiment Stacked -->
+                <div style="display: flex; flex-direction: column; gap: 48px;">
+                    <!-- Positive Sentiment -->
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: #4CAF50;">✨ Positive User Sentiment</h3>
+                        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <img src="star-wordcloud.png" alt="Positive Keywords Star Word Cloud" style="width: 100%; max-width: 400px; height: auto; filter: drop-shadow(0 8px 24px rgba(76, 175, 80, 0.3));">
+                        </div>
+                    </div>
+                    
+                    <!-- Negative Sentiment -->
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: #F44336;">⚠️ Negative User Sentiment</h3>
+                        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <img src="negative-wordcloud.png" alt="Negative Keywords Word Cloud" style="width: 100%; max-width: 400px; height: auto; filter: drop-shadow(0 8px 24px rgba(244, 67, 54, 0.3));">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Half: User Personas -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 32px; background: rgba(26, 26, 26, 0.4); border-radius: var(--radius-card);">
+                    <!-- Persona 1 -->
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <img src="user-avatar.png" alt="Persona 1" style="width: 100%; max-width: 280px; height: auto; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); margin-bottom: 24px;">
+                        
+                        <div style="width: 100%; padding: 20px; background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-card); border-left: 4px solid var(--color-primary);">
+                            <h4 style="font-size: 18px; font-weight: 700; color: var(--color-primary); margin-bottom: 12px;">Persona 1</h4>
+                            <ul style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6; list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 6px;">👤 <strong>Age:</strong> 30-year-old Male</li>
+                                <li style="margin-bottom: 6px;">🌏 <strong>Region:</strong> Southeast Asia</li>
+                                <li style="margin-bottom: 6px;">💼 <strong>Profile:</strong> Working professional with upper mid income</li>
+                                <li style="margin-bottom: 6px;">🔍 <strong>Need:</strong> Look for spiritual app with mystical and in-depth answers</li>
+                                <li>💻 <strong>Platform:</strong> Web & iOS user</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Persona 2 -->
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <img src="user-avatar-2.png" alt="Persona 2" style="width: 100%; max-width: 280px; height: auto; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); margin-bottom: 24px;">
+                        
+                        <div style="width: 100%; padding: 20px; background: rgba(254, 87, 6, 0.1); border-radius: var(--radius-card); border-left: 4px solid var(--color-secondary);">
+                            <h4 style="font-size: 18px; font-weight: 700; color: var(--color-secondary); margin-bottom: 12px;">Persona 2</h4>
+                            <ul style="font-size: 14px; color: var(--color-text-primary); line-height: 1.6; list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 6px;">👤 <strong>Age:</strong> 25-year-old Female</li>
+                                <li style="margin-bottom: 6px;">🌏 <strong>Region:</strong> US</li>
+                                <li style="margin-bottom: 6px;">💼 <strong>Profile:</strong> Young graduate just joining workforce for 3 years</li>
+                                <li style="margin-bottom: 6px;">🔍 <strong>Need:</strong> Often feel anxious, need a soulmate to share emotions</li>
+                                <li>💻 <strong>Platform:</strong> iOS user</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">07 / 08</div>
+        </div>
+
+        <!-- Slide 8: Recommendations -->
+        <div class="slide slide-1" data-slide="8">
+            <h2 class="slide-title">Strategic Recommendations</h2>
+            <p class="slide-subtitle">Data-Driven Action Plan</p>
+            
+            <div style="max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px;">
+                <!-- Recommendation 1 -->
+                <div style="padding: 32px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border-left: 4px solid var(--color-primary);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 48px; height: 48px; background: var(--color-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: white;">1</div>
+                        <h3 style="font-size: 24px; font-weight: 700; color: var(--color-primary); margin: 0;">Priority action - Drive subscriber conversion</h3>
+                    </div>
+                    <p style="font-size: 18px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 16px;">
+                        With 0.4% subscription CVR, focus on:
+                    </p>
+                    <ul style="font-size: 16px; color: var(--color-text-secondary); line-height: 1.8; margin-left: 20px;">
+                        <li>One-time download product</li>
+                        <li>Onboarding experience optimization</li>
+                        <li>First-week engagement campaigns</li>
+                        <li>Value demonstration within trial period</li>
+                    </ul>
+                </div>
+
+                <!-- Recommendation 2 -->
+                <div style="padding: 32px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border-left: 4px solid var(--color-secondary);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 48px; height: 48px; background: var(--color-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: white;">2</div>
+                        <h3 style="font-size: 24px; font-weight: 700; color: var(--color-secondary); margin: 0;">APAC Expansion</h3>
+                    </div>
+                    <p style="font-size: 18px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 16px;">
+                        42% of users from APAC region. Double down on:
+                    </p>
+                    <ul style="font-size: 16px; color: var(--color-text-secondary); line-height: 1.8; margin-left: 20px;">
+                        <li>Target 25-44 age group (66% of users)</li>
+                        <li>Time-zone optimized support</li>
+                        <li>Local partnerships and influencers</li>
+                    </ul>
+                </div>
+
+                <!-- Recommendation 3 -->
+                <div style="padding: 32px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border-left: 4px solid var(--color-primary);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 48px; height: 48px; background: var(--color-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: white;">3</div>
+                        <h3 style="font-size: 24px; font-weight: 700; color: var(--color-primary); margin: 0;">Improve retention</h3>
+                    </div>
+                    <p style="font-size: 18px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 16px;">
+                        With only 14% repeat purchase rate, optimize conversion path:
+                    </p>
+                    <ul style="font-size: 16px; color: var(--color-text-secondary); line-height: 1.8; margin-left: 20px;">
+                        <li>In-app upgrade prompts after week 2</li>
+                        <li>Monthly plan discount for weekly users</li>
+                        <li>Highlight cost savings (monthly vs weekly)</li>
+                        <li>Limited-time upgrade offers</li>
+                    </ul>
+                </div>
+
+                <!-- Recommendation 4 -->
+                <div style="padding: 32px; background: rgba(26, 26, 26, 0.6); border-radius: var(--radius-card); border-left: 4px solid var(--color-secondary);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 48px; height: 48px; background: var(--color-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: white;">4</div>
+                        <h3 style="font-size: 24px; font-weight: 700; color: var(--color-secondary); margin: 0;">Feature improvement</h3>
+                    </div>
+                    <p style="font-size: 18px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 16px;">
+                        Enhance product and user experience:
+                    </p>
+                    <ul style="font-size: 16px; color: var(--color-text-secondary); line-height: 1.8; margin-left: 20px;">
+                        <li>Collect more user data during registration stage such as Education, Income level</li>
+                        <li>Exclusive feature for God model users</li>
+                        <li>Clearer navigation & flow</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slide-number">08 / 08</div>
+        </div>
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="slide-nav">
+        <div class="nav-dot active" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+        <div class="nav-dot" data-slide="8"></div>
+    </div>
+
+    <script>
+        // Smooth scroll navigation
+        const slideContainer = document.getElementById('slideContainer');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const slides = document.querySelectorAll('.slide');
+        let slide3LeftShown = false;
+        let slide3RightShown = false;
+        let currentSlideNum = 1;
+
+        // Function to show left panel immediately on slide 3
+        function showSlide3LeftPanel() {
+            if (slide3LeftShown) return;
+            
+            const leftPanel = document.querySelector('.slide-3 .slide-3-panel:not(.slide-3-panel-right)');
+            if (leftPanel) {
+                setTimeout(() => {
+                    leftPanel.classList.add('animate-in');
+                    slide3LeftShown = true;
+                }, 100);
+            }
+        }
+
+        // Function to show right panel on click
+        function showSlide3RightPanel() {
+            if (slide3RightShown || !slide3LeftShown) return;
+            
+            const rightPanel = document.querySelector('.slide-3 .slide-3-panel-right');
+            if (rightPanel) {
+                rightPanel.classList.add('animate-in');
+                slide3RightShown = true;
+            }
+        }
+
+        // Update active dot on scroll
+        slideContainer.addEventListener('scroll', () => {
+            const scrollPosition = slideContainer.scrollLeft;
+            const slideWidth = window.innerWidth;
+            currentSlideNum = Math.round(scrollPosition / slideWidth) + 1;
+
+            navDots.forEach(dot => dot.classList.remove('active'));
+            const activeDot = document.querySelector(`.nav-dot[data-slide="${currentSlideNum}"]`);
+            if (activeDot) activeDot.classList.add('active');
+            
+            // Show left panel when slide 3 becomes active
+            if (currentSlideNum === 3) {
+                showSlide3LeftPanel();
+            }
+        });
+
+        // Click anywhere to advance right panel on slide 3
+        document.addEventListener('click', (e) => {
+            // Don't trigger on nav dot clicks
+            if (e.target.classList.contains('nav-dot')) return;
+            
+            if (currentSlideNum === 3 && slide3LeftShown && !slide3RightShown) {
+                showSlide3RightPanel();
+            }
+        });
+
+        // Spacebar or Enter to advance right panel
+        document.addEventListener('keydown', (e) => {
+            if ((e.key === ' ' || e.key === 'Enter') && currentSlideNum === 3 && slide3LeftShown && !slide3RightShown) {
+                e.preventDefault();
+                showSlide3RightPanel();
+            }
+        });
+
+        // Click navigation
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideNum = parseInt(dot.dataset.slide);
+                const targetSlide = document.querySelector(`.slide[data-slide="${slideNum}"]`);
+                targetSlide.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Click navigation
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideNum = parseInt(dot.dataset.slide);
+                const targetSlide = document.querySelector(`.slide[data-slide="${slideNum}"]`);
+                targetSlide.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Animate bars on load
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.bar-fill, .age-bar-fill');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                const current = document.querySelector('.nav-dot.active');
+                const next = current.nextElementSibling;
+                if (next) next.click();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                const current = document.querySelector('.nav-dot.active');
+                const prev = current.previousElementSibling;
+                if (prev) prev.click();
+            }
+        });
+    </script>
+</body>
+</html>

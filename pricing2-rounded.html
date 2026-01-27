@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Rounded Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: #5755EE;
+            --color-background: #000000;
+        }
+        body {
+            background-color: #000000;
+            background-image: url('5.png');
+            background-size: cover;
+            background-position: center;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        .image-container {
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 50px rgba(254, 87, 6, 0.1);
+            border-radius: 0;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            line-height: 0;
+            max-width: 1080px;
+            width: 100%;
+            aspect-ratio: 1080 / 1920;
+        }
+        .controls {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .btn {
+            background: var(--color-primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <!-- Embedded SVG for the Social Media Post (Portrait: 1080x1920) with Rounded Corners -->
+        <svg viewBox="0 0 1080 1920" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background Image -->
+          <image href="5.png" width="1080" height="1920" preserveAspectRatio="xMidYMid slice" />
+          
+          <!-- Subtle Overlay for Legibility -->
+          <rect width="1080" height="1920" fill="#000000" fill-opacity="0.4"/>
+          
+          <circle cx="540" cy="0" r="1000" fill="url(#paint0_radial)" fill-opacity="0.3"/>
+          
+          <!-- Logo Placement: Top Center (White with full opacity) -->
+          <image href="logolong.png" x="340" y="200" width="400" height="100" preserveAspectRatio="xMidYMid meet" filter="url(#whiteFilter)" />
+
+          <!-- Main Title -->
+          <text x="540" y="460" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="60" font-weight="900" letter-spacing="0" text-anchor="middle">
+            <tspan x="540" dy="0">EVERYTHING YOU NEED FOR</tspan>
+            <tspan x="540" dy="70">UNLIMITED SPIRITUAL CLARITY.</tspan>
+          </text>
+          
+          <!-- Weekly Plan (Y: 680, Rounded Corners) -->
+          <rect x="80" y="680" width="920" height="200" rx="20" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2"/>
+          <text x="140" y="740" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="32" font-weight="500">WEEKLY PLAN</text>
+          <!-- Lightbulb Icon from External SVG -->
+          <image href="lightbulb.svg" x="135" y="760" width="60" height="60" preserveAspectRatio="xMidYMid meet" filter="url(#whiteFilter)" />
+          <text x="220" y="813" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="48" font-weight="bold">TRY IT</text>
+          <text x="920" y="740" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="36" text-decoration="line-through" text-anchor="end">$6</text>
+          <text x="920" y="830" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="88" font-weight="bold" text-anchor="end">$5</text>
+
+          <!-- Monthly Plan (Y: 920, Rounded Corners) -->
+          <rect x="80" y="920" width="920" height="200" rx="20" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2"/>
+          <text x="140" y="980" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="32" font-weight="500">MONTHLY PLAN</text>
+          <!-- Phosphor ThumbsUp Icon from External SVG -->
+          <image href="thumbs-up.svg" x="135" y="1000" width="60" height="60" preserveAspectRatio="xMidYMid meet" filter="url(#whiteFilter)" />
+          <text x="220" y="1053" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="48" font-weight="bold">MOST POPULAR</text>
+          <text x="920" y="980" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="36" text-decoration="line-through" text-anchor="end">$20</text>
+          <text x="920" y="1070" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="88" font-weight="bold" text-anchor="end">$15</text>
+
+          <!-- Annual Plan (Y: 1160, Highlighted with Rounded Corners) -->
+          <rect x="80" y="1160" width="920" height="290" rx="20" fill="rgba(87, 85, 238, 0.1)" stroke="#5755EE" stroke-width="4"/>
+          <text x="140" y="1230" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="36" font-weight="500">ANNUAL PLAN</text>
+          <!-- Phosphor Star Icon (filled) -->
+          <g transform="translate(133, 1265) scale(2.8)">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="white" fill-opacity="0.9" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="230" y="1323" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="56" font-weight="bold">BEST VALUE</text>
+          <text x="920" y="1230" fill="#999999" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="42" text-decoration="line-through" text-anchor="end">$200</text>
+          <text x="920" y="1350" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="100" font-weight="bold" text-anchor="end">$119<tspan font-size="60" baseline-shift="0">.99</tspan></text>
+          
+          <!-- Annual Discount Label (Rounded) -->
+          <rect x="650" y="1370" width="270" height="50" rx="8" fill="#5755EE"/>
+          <text x="785" y="1405" fill="white" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle">40% DISCOUNT</text>
+
+          <!-- Bottom Text -->
+          <text x="540" y="1860" fill="#AAAAAA" font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif" font-size="28" text-anchor="middle" letter-spacing="3">25% CHEAPER THAN COMPETITORS</text>
+
+          <defs>
+            <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(540 0) rotate(90) scale(1000)">
+              <stop stop-color="#5755EE"/>
+              <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+            </radialGradient>
+            
+            <!-- White Filter for Logo -->
+            <filter id="whiteFilter">
+              <feFlood flood-color="white" result="white" />
+              <feComposite in="white" in2="SourceAlpha" operator="in" />
+            </filter>
+          </defs>
+        </svg>
+    </div>
+
+    <div class="controls">
+        <a href="#" class="btn" onclick="downloadSVG(); return false;">DOWNLOAD IMAGE</a>
+        <p class="mt-4 text-neutral-500">Rounded corners design - SVG format</p>
+    </div>
+
+    <script>
+        function downloadSVG() {
+            const svg = document.querySelector('svg');
+            const serializer = new XMLSerializer();
+            const svgStr = serializer.serializeToString(svg);
+            const blob = new Blob([svgStr], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'pricing-rounded.svg';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
+

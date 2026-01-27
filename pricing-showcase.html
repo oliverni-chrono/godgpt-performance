@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Pricing Launch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #FE5706;
+            --color-background: #000000;
+        }
+        body {
+            background-color: #000000;
+            background-image: url('3.png');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        .image-container {
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 50px rgba(254, 87, 6, 0.1);
+            border-radius: 0;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            line-height: 0;
+            max-width: 1080px;
+            width: 100%;
+            aspect-ratio: 1080 / 1920;
+            position: relative;
+        }
+        .controls {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .btn {
+            background: var(--color-primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 0;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <!-- Embedded SVG for the Social Media Post (Portrait: 1080x1920) -->
+        <svg viewBox="0 0 1080 1920" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background Image Replacement -->
+          <image href="3.png" width="1080" height="1920" preserveAspectRatio="xMidYMid slice" />
+          
+          <!-- Subtle Overlay for Legibility -->
+          <rect width="1080" height="1920" fill="#000000" fill-opacity="0.4"/>
+          
+          <circle cx="540" cy="0" r="1000" fill="url(#paint0_radial)" fill-opacity="0.3"/>
+          
+          <!-- Logo Placement: Top Center -->
+          <image href="logolong.png" x="340" y="80" width="400" height="100" preserveAspectRatio="xMidYMid meet" />
+
+          <!-- Main Title -->
+          <text x="540" y="320" fill="white" font-family="Space Grotesk, Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="2" text-anchor="middle">
+            <tspan x="540" dy="0">UNLIMITED QUESTIONS,</tspan>
+            <tspan x="540" dy="80">DEEPER INSIGHTS.</tspan>
+          </text>
+          
+          <!-- Weekly (Y: 550, Normal) -->
+          <rect x="80" y="550" width="920" height="240" rx="0" fill="white" fill-opacity="0.05" stroke="white" stroke-opacity="0.1"/>
+          <text x="140" y="630" fill="#999999" font-family="Space Grotesk, sans-serif" font-size="36">WEEKLY PLAN</text>
+          <g transform="translate(140, 665) scale(1.8)">
+            <path d="M9 18h6M10 22h4M12 2v1M5.22 5.22l.71.71M1 12h1M22 12h-1M18.07 5.22l-.71.71M7 12a5 5 0 0 1 5-5v0a5 5 0 0 1 5 5v0a5 5 0 0 1-5 5v0a5 5 0 0 1-5-5z" stroke="#FE5706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="200" y="705" fill="white" font-family="Space Grotesk, sans-serif" font-size="56" font-weight="bold">TRY IT</text>
+          <text x="920" y="630" fill="#AAAAAA" font-family="Space Grotesk, sans-serif" font-size="40" text-decoration="line-through" text-anchor="end">$6</text>
+          <text x="920" y="715" fill="white" font-family="Space Grotesk, sans-serif" font-size="96" font-weight="bold" text-anchor="end">$5</text>
+
+          <!-- Monthly (Y: 830, Normal) -->
+          <rect x="80" y="830" width="920" height="240" rx="0" fill="white" fill-opacity="0.05" stroke="white" stroke-opacity="0.1"/>
+          <text x="140" y="910" fill="#999999" font-family="Space Grotesk, sans-serif" font-size="36">MONTHLY PLAN</text>
+          <g transform="translate(140, 945) scale(1.8)">
+            <path d="M7 10v12M2 10.5a2.5 2.5 0 0 1 5 0V12h10a2 2 0 0 1 2 2v2a7 7 0 0 1-7 7h-2.1l-2-2.1a2 2 0 0 0-1.4-.6H7" stroke="#FE5706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 10.5V5a3 3 0 0 1 6 0v5.5" stroke="#FE5706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="200" y="985" fill="white" font-family="Space Grotesk, sans-serif" font-size="56" font-weight="bold">MOST POPULAR</text>
+          <text x="920" y="910" fill="#AAAAAA" font-family="Space Grotesk, sans-serif" font-size="40" text-decoration="line-through" text-anchor="end">$20</text>
+          <text x="920" y="995" fill="white" font-family="Space Grotesk, sans-serif" font-size="96" font-weight="bold" text-anchor="end">$15</text>
+
+          <!-- Annual (Y: 1110, Highlighted - Yellow Box) -->
+          <rect x="80" y="1110" width="920" height="320" rx="0" fill="#FE5706" fill-opacity="0.1" stroke="#FE5706" stroke-width="4"/>
+          <text x="140" y="1200" fill="#999999" font-family="Space Grotesk, sans-serif" font-size="40" font-weight="bold">ANNUAL PLAN</text>
+          <g transform="translate(140, 1245) scale(2.0)">
+             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#FE5706" stroke-width="1.5" fill="#FE5706" fill-opacity="0.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="210" y="1295" fill="white" font-family="Space Grotesk, sans-serif" font-size="64" font-weight="bold">BEST VALUE</text>
+          <text x="920" y="1200" fill="#AAAAAA" font-family="Space Grotesk, sans-serif" font-size="48" text-decoration="line-through" text-anchor="end">$200</text>
+          <text x="920" y="1310" fill="white" font-family="Space Grotesk, sans-serif" font-size="110" font-weight="bold" text-anchor="end">$120</text>
+          
+          <!-- Annual Discount Label -->
+          <rect x="610" y="1335" width="320" height="50" rx="0" fill="#FE5706"/>
+          <text x="770" y="1370" fill="white" font-family="Space Grotesk, Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle">40% DISCOUNT</text>
+
+          <!-- Bottom Text -->
+          <text x="540" y="1800" fill="#AAAAAA" font-family="Space Grotesk, sans-serif" font-size="32" text-anchor="middle" letter-spacing="4">25% CHEAPER THAN COMPETITORS</text>
+
+          <defs>
+            <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(540 0) rotate(90) scale(1000)">
+              <stop stop-color="#FE5706"/>
+              <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+        </svg>
+    </div>
+
+    <div class="controls">
+        <a href="#" class="btn">DOWNLOAD IMAGE</a>
+        <p class="mt-4 text-neutral-500">The above is a scalable vector graphic (SVG) rendered live.</p>
+    </div>
+</body>
+</html>
