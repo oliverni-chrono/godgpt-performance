@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Deepdive 2</title>
+    <style>
+        :root {
+            /* Brand Colors */
+            --color-primary: #FE5706;
+            --color-secondary: #FFA147;
+            --color-background: #010100;
+            --color-surface: #1A1A1A;
+            --color-text-primary: #E6E6E6;
+            --color-text-secondary: #999999;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Border Radius */
+            --radius-button: 12px;
+            --radius-card: 16px;
+            --radius-input: 10px;
+            
+            /* Button States */
+            --button-pressed-opacity: 0.8;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(254, 87, 6, 0.3);
+            --shadow-card: 0 4px 12px rgba(254, 87, 6, 0.2);
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 48px;
+            --font-size-5xl: 64px;
+            
+            /* Animation */
+            --animation-fast: 150ms;
+            --animation-normal: 300ms;
+            --animation-slow: 500ms;
+            --easing-primary: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide-container {
+            scroll-snap-type: x mandatory;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slide-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .slide {
+            scroll-snap-align: start;
+            min-width: 100vw;
+            min-height: 100vh;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            position: relative;
+            flex-shrink: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Bar chart styles */
+        .bar-chart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bar-label {
+            font-size: 16px;
+            font-weight: 600;
+            min-width: 200px;
+            color: var(--color-text-primary);
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 40px;
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 16px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: width 1s var(--easing-primary);
+        }
+
+        .bar-value {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .insight-box {
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(254, 87, 6, 0.1);
+            border-radius: var(--radius-button);
+            border-left: 4px solid var(--color-primary);
+            max-width: 900px;
+        }
+
+        .insight-label {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .insight-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .comparison-card {
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            text-align: center;
+            border: 1px solid rgba(254, 87, 6, 0.2);
+        }
+
+        .big-number {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .big-label {
+            font-size: 20px;
+            color: var(--color-text-primary);
+            margin-bottom: 16px;
+        }
+
+        .sub-stat {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Navigation */
+        .slide-nav {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: row;
+            gap: var(--spacing-md);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(254, 87, 6, 0.3);
+            cursor: pointer;
+            transition: all var(--animation-normal) var(--easing-primary);
+        }
+
+        .nav-dot.active {
+            background: var(--color-primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #0f0f0f 0%, var(--color-surface) 100%);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, var(--color-surface) 0%, #0f0f0f 100%);
+        }
+
+        .slide-4 {
+            background: linear-gradient(135deg, #0f0f0f 0%, var(--color-surface) 100%);
+        }
+
+        /* Slide 1: Summary */
+        .slide-1 {
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+        }
+
+        .slide-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(254, 87, 6, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .slide-title {
+            font-size: var(--font-size-5xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-subtitle {
+            font-size: var(--font-size-2xl);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-3xl);
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            max-width: 1200px;
+            width: 100%;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .stat-card {
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: var(--radius-card);
+            padding: 40px var(--spacing-xl);
+            border: 1px solid rgba(254, 87, 6, 0.2);
+            transition: all var(--animation-normal) var(--easing-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(254, 87, 6, 0.5);
+            box-shadow: var(--shadow-card);
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .stat-detail {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px var(--spacing-xl);
+                overflow-y: auto;
+            }
+
+            .slide-title {
+                font-size: var(--font-size-4xl);
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(26, 26, 26, 0.3);
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: rgba(254, 87, 6, 0.5);
+            border-radius: 3px;
+        }
+
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container" id="slideContainer">
+        <!-- Slide 1: Summary -->
+        <div class="slide slide-1" data-slide="1">
+            <h1 class="slide-title">User Profile Analysis Part 2</h1>
+            <p class="slide-subtitle">Recap on key user demographics</p>
+            
+            <div class="summary-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-number">41K+</div>
+                    <div class="stat-detail">Across 100+ countries</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Primary Market</div>
+                    <div class="stat-number">APAC/ID</div>
+                    <div class="stat-detail">62% of user base<br>🇮🇩 Indonesia 12.3%</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Core Demographic</div>
+                    <div class="stat-number">25-44</div>
+                    <div class="stat-detail">66% age concentration</div>
+                </div>
+            </div>
+
+            <div class="summary-grid" style="margin-top: 32px;">
+                <div class="stat-card">
+                    <div class="stat-label">Gender Split</div>
+                    <div class="stat-number">58% M</div>
+                    <div class="stat-detail">42% Female / 58% Male</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Total Subscribers</div>
+                    <div class="stat-number">330</div>
+                    <div class="stat-detail">Subscriber CVR: 0.4%</div>
+                </div>
+                
+                <div class="stat-card" style="display: flex; gap: 20px; align-items: center;">
+                    <img src="user-avatar-2.png" alt="Subscriber Persona" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">
+                    <div>
+                        <div class="stat-label">Subscriber Persona</div>
+                        <div class="stat-number" style="font-size: 28px;">25F 🇺🇸</div>
+                        <div class="stat-detail">Young professional, iOS user<br>Seeks emotional connection</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">01 / 04</div>
+        </div>
+
+        <!-- Slide 2: Credits Usage -->
+        <div class="slide slide-2" data-slide="2">
+            <h2 class="slide-title">Credits Usage Analysis</h2>
+            <p class="slide-subtitle">How users consume their free credits (320 total)</p>
+            
+            <div style="max-width: 900px; width: 100%; margin-top: 48px;">
+                <div class="bar-chart">
+                    <div class="bar-item">
+                        <span class="bar-label" style="min-width: 280px;">🚫 Not Used (320 credits)</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 51%; background: linear-gradient(90deg, #666, #888);">51%</div>
+                        </div>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">22,613 users</span>
+                    </div>
+                    <div class="bar-item">
+                        <span class="bar-label" style="min-width: 280px;">📊 Lightly Used (100-310 credits left)</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 43%; background: linear-gradient(90deg, var(--color-secondary), #FFB86C);">43%</div>
+                        </div>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">18,835 users</span>
+                    </div>
+                    <div class="bar-item">
+                        <span class="bar-label" style="min-width: 280px;">🔥 Heavily Used (<100 credits left)</span>
+                        <div class="bar-container" style="position: relative;">
+                            <div class="bar-fill" style="width: 5%;"></div>
+                            <span style="position: absolute; left: 70px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-primary);">5%</span>
+                        </div>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">2,133 users</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;">
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="stat-number" style="font-size: 48px;">51%</div>
+                        <div class="stat-label" style="font-size: 14px;">Never Engaged</div>
+                        <div class="stat-detail">Opportunity for activation campaigns</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="stat-number" style="font-size: 48px;">43%</div>
+                        <div class="stat-label" style="font-size: 14px;">Trying Product</div>
+                        <div class="stat-detail">Light engagement, need nurturing</div>
+                    </div>
+                    <div class="stat-card" style="text-align: center;">
+                        <div class="stat-number" style="font-size: 48px;">5%</div>
+                        <div class="stat-label" style="font-size: 14px;">Power Users</div>
+                        <div class="stat-detail">High conversion potential</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">02 / 04</div>
+        </div>
+
+        <!-- Slide 3: Subscriber Credit Usage -->
+        <div class="slide slide-3" data-slide="3">
+            <h2 class="slide-title">Subscriber Credit Behavior</h2>
+            <p class="slide-subtitle">Credit usage pattern among 330 subscribers</p>
+            
+            <div style="max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px;">
+                <!-- Left: Bar Chart -->
+                <div>
+                    <h3 style="font-size: 24px; color: var(--color-primary); margin-bottom: 32px; text-align: center;">Subscriber Credits at Conversion</h3>
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <span class="bar-label" style="min-width: 220px;">Used ALL (0 credits left)</span>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 77%;">77%</div>
+                            </div>
+                            <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">255</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label" style="min-width: 220px;">Heavy (1-100 credits left)</span>
+                            <div class="bar-container" style="position: relative;">
+                                <div class="bar-fill" style="width: 10%;"></div>
+                                <span style="position: absolute; left: 50px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-primary);">10%</span>
+                            </div>
+                            <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">33</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label" style="min-width: 220px;">Light (100-310 credits left)</span>
+                            <div class="bar-container" style="position: relative;">
+                                <div class="bar-fill" style="width: 9%; background: linear-gradient(90deg, var(--color-secondary), #FFB86C);"></div>
+                                <span style="position: absolute; left: 45px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-secondary);">9%</span>
+                            </div>
+                            <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">29</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label" style="min-width: 220px;">Not Used (320 credits left)</span>
+                            <div class="bar-container" style="position: relative;">
+                                <div class="bar-fill" style="width: 4%; background: linear-gradient(90deg, #666, #888);"></div>
+                                <span style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #888;">4%</span>
+                            </div>
+                            <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">13</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Key Insight -->
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <div style="text-align: center; margin-bottom: 32px;">
+                        <div style="font-size: 120px; font-weight: 700; color: var(--color-primary); line-height: 1;">77%</div>
+                        <div style="font-size: 24px; color: var(--color-text-primary); margin-top: 8px;">subscribe after using ALL credits</div>
+                    </div>
+
+                    <div class="insight-box" style="margin-top: 0;">
+                        <div class="insight-label">💡 Strategic Implication</div>
+                        <div class="insight-text">
+                            Users convert when they've exhausted free credits and want more. 
+                            <strong style="color: var(--color-primary);">Monitor credit usage</strong> and trigger 
+                            <strong style="color: var(--color-primary);">subscription reminder emails</strong> 
+                            when users approach 0 credits to maximize conversion.
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 24px; padding: 16px 24px; background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-button); border-left: 4px solid #4CAF50;">
+                        <div style="font-size: 14px; color: #4CAF50; font-weight: 600;">🎯 ACTION ITEM</div>
+                        <div style="font-size: 16px; color: var(--color-text-primary); margin-top: 8px;">
+                            Set up automated email at 20, 10, and 0 credits remaining
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">03 / 04</div>
+        </div>
+
+        <!-- Slide 4: Newsletter & Subscription -->
+        <div class="slide slide-4" data-slide="4">
+            <h2 class="slide-title">Newsletter Impact on Conversion</h2>
+            <p class="slide-subtitle">Email engagement drives subscription behavior</p>
+            
+            <div style="max-width: 1100px; width: 100%; margin-top: 48px;">
+                <!-- Big comparison -->
+                <div class="comparison-grid">
+                    <div class="comparison-card" style="border-color: var(--color-primary);">
+                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">📧 People who click newsletter</div>
+                        <div class="big-number">21%</div>
+                        <div class="big-label">Subscription Rate</div>
+                        <div class="sub-stat">153 subscribers out of 743 clickers</div>
+                    </div>
+                    <div class="comparison-card">
+                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">🚫 Did NOT Click</div>
+                        <div class="big-number" style="color: #666;">0.6%</div>
+                        <div class="big-label">Subscription Rate</div>
+                        <div class="sub-stat">272 subscribers out of 43,192 non-clickers</div>
+                    </div>
+                </div>
+
+                <!-- 10X callout -->
+                <div style="text-align: center; margin: 48px 0;">
+                    <div style="display: inline-flex; align-items: center; gap: 24px; padding: 24px 48px; background: linear-gradient(135deg, rgba(254, 87, 6, 0.2), rgba(255, 161, 71, 0.1)); border-radius: 24px; border: 2px solid var(--color-primary);">
+                        <span style="font-size: 64px;">📬</span>
+                        <div style="text-align: left;">
+                            <div style="font-size: 48px; font-weight: 700; color: var(--color-primary);">35X</div>
+                            <div style="font-size: 18px; color: var(--color-text-primary);">more likely to subscribe from people who clicked newsletter</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom insights -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div class="insight-box" style="margin-top: 0;">
+                        <div class="insight-label">💡 Key Insight</div>
+                        <div class="insight-text">
+                            Users who engage with newsletters have <strong style="color: var(--color-primary);">dramatically higher</strong> conversion rates. 
+                            Email engagement is a strong predictor of subscription intent.
+                        </div>
+                    </div>
+                    <div style="padding: 24px; background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-button); border-left: 4px solid #4CAF50;">
+                        <div class="insight-label" style="color: #4CAF50;">🎯 Action Items</div>
+                        <div class="insight-text">
+                            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                                <li>Increase email send frequency for engaged users</li>
+                                <li>A/B test subject lines to boost open rates</li>
+                                <li>Segment clickers for targeted offers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-number">04 / 04</div>
+        </div>
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="slide-nav">
+        <div class="nav-dot active" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+    </div>
+
+    <script>
+        const slideContainer = document.getElementById('slideContainer');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        // Update active dot on scroll
+        slideContainer.addEventListener('scroll', () => {
+            const scrollPosition = slideContainer.scrollLeft;
+            const slideWidth = window.innerWidth;
+            const currentSlide = Math.round(scrollPosition / slideWidth) + 1;
+
+            navDots.forEach(dot => dot.classList.remove('active'));
+            const activeDot = document.querySelector(`.nav-dot[data-slide="${currentSlide}"]`);
+            if (activeDot) activeDot.classList.add('active');
+        });
+
+        // Click navigation
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideNum = parseInt(dot.dataset.slide);
+                const targetSlide = document.querySelector(`.slide[data-slide="${slideNum}"]`);
+                targetSlide.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                const current = document.querySelector('.nav-dot.active');
+                const next = current.nextElementSibling;
+                if (next) next.click();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                const current = document.querySelector('.nav-dot.active');
+                const prev = current.previousElementSibling;
+                if (prev) prev.click();
+            }
+        });
+
+        // Animate bars on load
+        window.addEventListener('load', () => {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
