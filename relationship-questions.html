@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Insights | Deep Questions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #FE5706;
+            --color-secondary: #FFA147;
+            --color-background: #ffffff;
+            --color-surface: #f5f5f5;
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #666666;
+            --font-primary: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background effect */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(254, 87, 6, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vw, 52px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Grid Layout - 2x3 */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .questions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Question Card */
+        .question-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .question-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 60px rgba(254, 87, 6, 0.15);
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .card-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .question-card:hover .card-image {
+            transform: scale(1.08);
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px;
+            z-index: 2;
+        }
+
+        .card-number {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            background: rgba(254, 87, 6, 0.8);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-size: 40px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #ffffff;
+        }
+
+        /* CTA Card Special Styling */
+        .question-card.cta-card .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            top: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-card .card-title {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        /* Brand Card - Centered Text */
+        .brand-card .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            top: 0;
+            bottom: 0;
+        }
+
+        .brand-card .card-title {
+            font-size: 40px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .heart-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--color-primary);
+            filter: drop-shadow(0 0 8px rgba(254, 87, 6, 0.6));
+            animation: heartbeat 1.5s ease-in-out infinite;
+            vertical-align: middle;
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .cta-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Zodiac Icons Section */
+        .zodiac-icons-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .zodiac-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 32px;
+        }
+
+        .zodiac-icons-grid {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .zodiac-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .zodiac-icon {
+            width: 80px;
+            height: 80px;
+            color: var(--color-primary);
+            filter: drop-shadow(0 0 12px rgba(254, 87, 6, 0.4));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .zodiac-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(254, 87, 6, 0.6));
+        }
+
+        .zodiac-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        .footer-text span {
+            color: var(--color-primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.1s; }
+        .question-card:nth-child(2) { animation-delay: 0.2s; }
+        .question-card:nth-child(3) { animation-delay: 0.3s; }
+        .question-card:nth-child(4) { animation-delay: 0.4s; }
+        .question-card:nth-child(5) { animation-delay: 0.5s; }
+        .question-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    
+    <div class="container">
+        <header>
+            <p class="tagline">Relationship Insights</p>
+            <h1>Questions That Echo Within</h1>
+            <p class="subtitle">Explore the deep frequencies of love, connection, and self-discovery through the lens of psychology and cosmic wisdom.</p>
+        </header>
+
+        <div class="questions-grid">
+            <!-- Card 1: Healthy Love -->
+            <div class="question-card">
+                <img src="q1-healthy-love.png" alt="What is healthy love" class="card-image">
+                <div class="card-content">
+                    <span class="card-number">01</span>
+                    <h3 class="card-title">What kind of love do I actually want? What counts as "healthy love"?</h3>
+                </div>
+            </div>
+
+            <!-- Card 2: Emotional Depth -->
+            <div class="question-card">
+                <img src="q2-emotional-depth.png" alt="Emotional depth in relationships" class="card-image">
+                <div class="card-content">
+                    <span class="card-number">02</span>
+                    <h3 class="card-title">Are we truly compatible? Why can't my partner resonate with my deeper emotions?</h3>
+                </div>
+            </div>
+
+            <!-- Card 3: Pattern Loop -->
+            <div class="question-card">
+                <img src="q3-pattern-loop.png" alt="Repeating relationship patterns" class="card-image">
+                <div class="card-content">
+                    <span class="card-number">03</span>
+                    <h3 class="card-title">Why am I attracted to a certain type and keep falling into similar patterns?</h3>
+                </div>
+            </div>
+
+            <!-- Card 4: Control Dynamics -->
+            <div class="question-card">
+                <img src="q4-control-dynamics.png" alt="Control in relationships" class="card-image">
+                <div class="card-content">
+                    <span class="card-number">04</span>
+                    <h3 class="card-title">Is my partner's controlling behavior a psychological issue or personality?</h3>
+                </div>
+            </div>
+
+            <!-- Card 5: Astrology -->
+            <div class="question-card">
+                <img src="q5-astrology-synastry.png" alt="Astrology and synastry" class="card-image">
+                <div class="card-content">
+                    <span class="card-number">05</span>
+                    <h3 class="card-title">From astrology charts and synastry, where is our relationship heading?</h3>
+                </div>
+            </div>
+
+            <!-- Card 6: Brand -->
+            <div class="question-card brand-card">
+                <img src="4.png" alt="Relationship insights" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Ready to Understand Your&nbsp;<span style="white-space: nowrap;"><svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>?</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zodiac Icons Section -->
+        <div class="zodiac-icons-section">
+            <h3 class="zodiac-title">Zodiac Icon Options</h3>
+            <div class="zodiac-icons-grid">
+                <!-- Option 1: Zodiac Wheel -->
+                <div class="zodiac-option">
+                    <svg class="zodiac-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <line x1="12" y1="2" x2="12" y2="6"/>
+                        <line x1="12" y1="18" x2="12" y2="22"/>
+                        <line x1="2" y1="12" x2="6" y2="12"/>
+                        <line x1="18" y1="12" x2="22" y2="12"/>
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+                    </svg>
+                    <p class="zodiac-label">Zodiac Wheel</p>
+                </div>
+                
+                <!-- Option 2: Star -->
+                <div class="zodiac-option">
+                    <svg class="zodiac-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <p class="zodiac-label">Star</p>
+                </div>
+                
+                <!-- Option 3: Yin Yang -->
+                <div class="zodiac-option">
+                    <svg class="zodiac-icon yin-yang" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                        <path d="M12 2a10 10 0 0 0 0 20 5 5 0 0 0 0-10 5 5 0 0 1 0-10z" fill="white"/>
+                        <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
+                        <circle cx="12" cy="17" r="1.5" fill="white"/>
+                    </svg>
+                    <p class="zodiac-label">Yin Yang</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="footer-text">Powered by <span>HyperEcho</span> — Language resonating with the soul</p>
+        </footer>
+    </div>
+</body>
+</html>
