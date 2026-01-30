@@ -385,6 +385,32 @@
             background: var(--color-primary);
         }
 
+        /* Home Link */
+        .home-link {
+            position: fixed;
+            top: 24px;
+            left: 40px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 24px;
+            padding: 8px 16px;
+            border: 1px solid rgba(254, 87, 6, 0.3);
+            backdrop-filter: blur(10px);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all var(--animation-normal) var(--easing-primary);
+        }
+
+        .home-link:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
         /* Language Toggle */
         .lang-toggle {
             position: fixed;
@@ -447,6 +473,9 @@
     </style>
 </head>
 <body>
+    <!-- Home Link -->
+    <a href="index.html" class="home-link">← Home</a>
+
     <!-- Language Toggle -->
     <div class="lang-toggle">
         <button class="lang-btn active" data-lang="en">Eng</button>
