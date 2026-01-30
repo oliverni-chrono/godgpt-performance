@@ -384,54 +384,120 @@
         .slide::-webkit-scrollbar-thumb:hover {
             background: var(--color-primary);
         }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 24px;
+            right: 40px;
+            z-index: 1001;
+            display: flex;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 24px;
+            padding: 4px;
+            border: 1px solid rgba(254, 87, 6, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all var(--animation-normal) var(--easing-primary);
+        }
+
+        .lang-btn:hover {
+            color: var(--color-text-primary);
+        }
+
+        .lang-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .lang-btn:active {
+            opacity: 0.8;
+        }
+
+        /* Language visibility */
+        [data-lang-zh] { display: none; }
+        [data-lang-en] { display: inline; }
+        
+        body.lang-zh [data-lang-zh] { display: inline; }
+        body.lang-zh [data-lang-en] { display: none; }
+        
+        /* Block elements */
+        .lang-block[data-lang-zh] { display: none; }
+        .lang-block[data-lang-en] { display: block; }
+        
+        body.lang-zh .lang-block[data-lang-zh] { display: block; }
+        body.lang-zh .lang-block[data-lang-en] { display: none; }
+
+        /* List items */
+        li[data-lang-zh] { display: none; }
+        li[data-lang-en] { display: list-item; }
+        
+        body.lang-zh li[data-lang-zh] { display: list-item; }
+        body.lang-zh li[data-lang-en] { display: none; }
     </style>
 </head>
 <body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">Eng</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+
     <div class="slide-container" id="slideContainer">
         <!-- Slide 1: Summary -->
         <div class="slide slide-1" data-slide="1">
-            <h1 class="slide-title">User Profile Analysis Part 2</h1>
-            <p class="slide-subtitle">Recap on key demographics and prompts analysis</p>
+            <h1 class="slide-title"><span data-lang-en>User Profile Analysis Part 2</span><span data-lang-zh>用户画像分析 第二部分</span></h1>
+            <p class="slide-subtitle"><span data-lang-en>Recap on key demographics and prompts analysis</span><span data-lang-zh>关键人口统计与提问分析回顾</span></p>
             
             <div class="summary-grid">
                 <div class="stat-card">
-                    <div class="stat-label">Total Users</div>
+                    <div class="stat-label"><span data-lang-en>Total Users</span><span data-lang-zh>总用户数</span></div>
                     <div class="stat-number">41K+</div>
-                    <div class="stat-detail">Across 100+ countries</div>
+                    <div class="stat-detail"><span data-lang-en>Across 100+ countries</span><span data-lang-zh>覆盖100+国家</span></div>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-label">Primary Market</div>
+                    <div class="stat-label"><span data-lang-en>Primary Market</span><span data-lang-zh>主要市场</span></div>
                     <div class="stat-number">APAC/ID</div>
-                    <div class="stat-detail">62% of user base<br>🇮🇩 Indonesia 12.3%</div>
+                    <div class="stat-detail"><span data-lang-en>62% of user base<br>🇮🇩 Indonesia 12.3%</span><span data-lang-zh>占用户群体62%<br>🇮🇩 印尼 12.3%</span></div>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-label">Core Demographic</div>
-                    <div class="stat-number">25-44 M</div>
-                    <div class="stat-detail">66% mid-aged<br>58% male</div>
+                    <div class="stat-label"><span data-lang-en>Core Demographic</span><span data-lang-zh>核心人群</span></div>
+                    <div class="stat-number"><span data-lang-en>25-44 M</span><span data-lang-zh>25-44岁 男</span></div>
+                    <div class="stat-detail"><span data-lang-en>66% mid-aged<br>58% male</span><span data-lang-zh>66%中青年<br>58%男性</span></div>
                 </div>
             </div>
 
             <div class="summary-grid" style="margin-top: 32px; align-items: stretch;">
                 <div class="stat-card">
-                    <div class="stat-label">FAQ</div>
+                    <div class="stat-label"><span data-lang-en>FAQ</span><span data-lang-zh>常见问题</span></div>
                     <div class="stat-number">25% <span style="font-size: 18px; font-weight: 400;">玄学/占卜/运势</span></div>
                     <div class="stat-detail">14% 生活卡点<br>12% 人生困惑</div>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-label">Total Subscribers</div>
+                    <div class="stat-label"><span data-lang-en>Total Subscribers</span><span data-lang-zh>付费订阅者</span></div>
                     <div class="stat-number">330</div>
-                    <div class="stat-detail">Subscriber CVR: 0.4%</div>
+                    <div class="stat-detail"><span data-lang-en>Subscriber CVR: 0.4%</span><span data-lang-zh>订阅转化率: 0.4%</span></div>
                 </div>
                 
                 <div class="stat-card" style="display: flex; align-items: center; gap: 20px;">
                     <img src="user-a3.png" alt="Subscriber Persona" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-primary); flex-shrink: 0;">
                     <div>
-                        <div class="stat-label">Subscriber Persona</div>
+                        <div class="stat-label"><span data-lang-en>Subscriber Persona</span><span data-lang-zh>订阅者画像</span></div>
                         <div class="stat-number" style="font-size: 28px;">25F 🇺🇸</div>
-                        <div class="stat-detail">Young professional, iOS<br>Seeks emotional connection</div>
+                        <div class="stat-detail"><span data-lang-en>Young professional, iOS<br>Seeks emotional connection</span><span data-lang-zh>年轻职业女性, iOS用户<br>寻求情感连接</span></div>
                     </div>
                 </div>
             </div>
@@ -441,50 +507,50 @@
 
         <!-- Slide 2: Credits Usage -->
         <div class="slide slide-2" data-slide="2">
-            <h2 class="slide-title">Credits Usage Analysis</h2>
-            <p class="slide-subtitle">How users consume their free credits (320 total)</p>
+            <h2 class="slide-title"><span data-lang-en>Credits Usage Analysis</span><span data-lang-zh>积分使用分析</span></h2>
+            <p class="slide-subtitle"><span data-lang-en>How users consume their free credits (320 total)</span><span data-lang-zh>用户如何消耗免费积分（共320积分）</span></p>
             
             <div style="max-width: 900px; width: 100%; margin-top: 48px;">
                 <div class="bar-chart">
                     <div class="bar-item">
-                        <span class="bar-label" style="min-width: 280px;">🚫 Not Used (320 credits)</span>
+                        <span class="bar-label" style="min-width: 280px;">🚫 <span data-lang-en>Not Used (320 credits)</span><span data-lang-zh>未使用（剩320积分）</span></span>
                         <div class="bar-container">
                             <div class="bar-fill" style="width: 51%; background: linear-gradient(90deg, #666, #888);">51%</div>
                         </div>
-                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">22,613 users</span>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">22,613 <span data-lang-en>users</span><span data-lang-zh>人</span></span>
                     </div>
                     <div class="bar-item">
-                        <span class="bar-label" style="min-width: 280px;">📊 Lightly Used (100-310 credits left)</span>
+                        <span class="bar-label" style="min-width: 280px;">📊 <span data-lang-en>Lightly Used (100-310 credits left)</span><span data-lang-zh>轻度使用（剩100-310积分）</span></span>
                         <div class="bar-container">
                             <div class="bar-fill" style="width: 43%; background: linear-gradient(90deg, var(--color-secondary), #FFB86C);">43%</div>
                         </div>
-                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">18,835 users</span>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">18,835 <span data-lang-en>users</span><span data-lang-zh>人</span></span>
                     </div>
                     <div class="bar-item">
-                        <span class="bar-label" style="min-width: 280px;">🔥 Heavily Used (<100 credits left)</span>
+                        <span class="bar-label" style="min-width: 280px;">🔥 <span data-lang-en>Heavily Used (&lt;100 credits left)</span><span data-lang-zh>重度使用（剩&lt;100积分）</span></span>
                         <div class="bar-container" style="position: relative;">
                             <div class="bar-fill" style="width: 5%;"></div>
                             <span style="position: absolute; left: 70px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-primary);">5%</span>
                         </div>
-                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">2,133 users</span>
+                        <span style="min-width: 100px; text-align: right; color: var(--color-text-secondary);">2,133 <span data-lang-en>users</span><span data-lang-zh>人</span></span>
                     </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;">
                     <div class="stat-card" style="text-align: center;">
                         <div class="stat-number" style="font-size: 48px;">51%</div>
-                        <div class="stat-label" style="font-size: 14px;">Never Engaged</div>
-                        <div class="stat-detail">Opportunity for activation campaigns</div>
+                        <div class="stat-label" style="font-size: 14px;"><span data-lang-en>Never Engaged</span><span data-lang-zh>从未使用</span></div>
+                        <div class="stat-detail"><span data-lang-en>Opportunity for activation campaigns</span><span data-lang-zh>激活营销的机会</span></div>
                     </div>
                     <div class="stat-card" style="text-align: center;">
                         <div class="stat-number" style="font-size: 48px;">43%</div>
-                        <div class="stat-label" style="font-size: 14px;">Trying Product</div>
-                        <div class="stat-detail">Light engagement, need nurturing</div>
+                        <div class="stat-label" style="font-size: 14px;"><span data-lang-en>Trying Product</span><span data-lang-zh>尝试产品</span></div>
+                        <div class="stat-detail"><span data-lang-en>Light engagement, need nurturing</span><span data-lang-zh>轻度参与，需要培育</span></div>
                     </div>
                     <div class="stat-card" style="text-align: center;">
                         <div class="stat-number" style="font-size: 48px;">5%</div>
-                        <div class="stat-label" style="font-size: 14px;">Power Users</div>
-                        <div class="stat-detail">High conversion potential</div>
+                        <div class="stat-label" style="font-size: 14px;"><span data-lang-en>Power Users</span><span data-lang-zh>深度用户</span></div>
+                        <div class="stat-detail"><span data-lang-en>High conversion potential</span><span data-lang-zh>高转化潜力</span></div>
                     </div>
                 </div>
             </div>
@@ -494,24 +560,24 @@
 
         <!-- Slide 3: Subscriber Credit Usage -->
         <div class="slide slide-3" data-slide="3">
-            <h2 class="slide-title">Subscriber Credit Behavior</h2>
-            <p class="slide-subtitle">Credit usage pattern among 330 subscribers</p>
+            <h2 class="slide-title"><span data-lang-en>Subscriber Credit Behavior</span><span data-lang-zh>订阅者积分行为</span></h2>
+            <p class="slide-subtitle"><span data-lang-en>Credit usage pattern among 330 subscribers</span><span data-lang-zh>330名订阅者的积分使用模式</span></p>
             
             <div style="max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px;">
                 <!-- Left: Bar Chart -->
                 <div>
-                    <h3 style="font-size: 24px; color: var(--color-primary); margin-bottom: 32px; text-align: center;">Subscriber Credits at Conversion</h3>
+                    <h3 style="font-size: 24px; color: var(--color-primary); margin-bottom: 32px; text-align: center;"><span data-lang-en>Subscriber Credits at Conversion</span><span data-lang-zh>订阅者转化时的积分情况</span></h3>
                     <div class="bar-chart">
                         <div class="bar-item" style="position: relative; border: 2px solid #ef4444; border-radius: 8px; padding: 12px 16px; margin: -12px -16px 4px -16px;">
-                            <span style="position: absolute; top: -12px; left: 12px; background: var(--color-background); padding: 0 8px; font-size: 12px; font-weight: 600; color: #ef4444;">High Quality User</span>
-                            <span class="bar-label" style="min-width: 220px;">Used ALL (0 credits left)</span>
+                            <span style="position: absolute; top: -12px; left: 12px; background: var(--color-background); padding: 0 8px; font-size: 12px; font-weight: 600; color: #ef4444;"><span data-lang-en>High Quality User</span><span data-lang-zh>高质量用户</span></span>
+                            <span class="bar-label" style="min-width: 220px;"><span data-lang-en>Used ALL (0 credits left)</span><span data-lang-zh>用完（剩0积分）</span></span>
                             <div class="bar-container">
                                 <div class="bar-fill" style="width: 77%;">77%</div>
                             </div>
                             <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">255</span>
                         </div>
                         <div class="bar-item">
-                            <span class="bar-label" style="min-width: 220px;">Heavy (1-100 credits left)</span>
+                            <span class="bar-label" style="min-width: 220px;"><span data-lang-en>Heavy (1-100 credits left)</span><span data-lang-zh>重度（剩1-100积分）</span></span>
                             <div class="bar-container" style="position: relative;">
                                 <div class="bar-fill" style="width: 10%;"></div>
                                 <span style="position: absolute; left: 50px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-primary);">10%</span>
@@ -519,7 +585,7 @@
                             <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">33</span>
                         </div>
                         <div class="bar-item">
-                            <span class="bar-label" style="min-width: 220px;">Light (100-310 credits left)</span>
+                            <span class="bar-label" style="min-width: 220px;"><span data-lang-en>Light (100-310 credits left)</span><span data-lang-zh>轻度（剩100-310积分）</span></span>
                             <div class="bar-container" style="position: relative;">
                                 <div class="bar-fill" style="width: 9%; background: linear-gradient(90deg, var(--color-secondary), #FFB86C);"></div>
                                 <span style="position: absolute; left: 45px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--color-secondary);">9%</span>
@@ -527,7 +593,7 @@
                             <span style="min-width: 60px; text-align: right; color: var(--color-text-secondary);">29</span>
                         </div>
                         <div class="bar-item">
-                            <span class="bar-label" style="min-width: 220px;">Not Used (320 credits left)</span>
+                            <span class="bar-label" style="min-width: 220px;"><span data-lang-en>Not Used (320 credits left)</span><span data-lang-zh>未使用（剩320积分）</span></span>
                             <div class="bar-container" style="position: relative;">
                                 <div class="bar-fill" style="width: 4%; background: linear-gradient(90deg, #666, #888);"></div>
                                 <span style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-weight: 700; color: #888;">4%</span>
@@ -541,23 +607,27 @@
                 <div style="display: flex; flex-direction: column; justify-content: center;">
                     <div style="text-align: center; margin-bottom: 32px;">
                         <div style="font-size: 120px; font-weight: 700; color: var(--color-primary); line-height: 1;">77%</div>
-                        <div style="font-size: 24px; color: var(--color-text-primary); margin-top: 8px;">subscribe after using ALL credits</div>
+                        <div style="font-size: 24px; color: var(--color-text-primary); margin-top: 8px;"><span data-lang-en>subscribe after using ALL credits</span><span data-lang-zh>用完所有积分后订阅</span></div>
                     </div>
 
                     <div class="insight-box" style="margin-top: 0;">
-                        <div class="insight-label">💡 Strategic Implication</div>
+                        <div class="insight-label">💡 <span data-lang-en>Strategic Implication</span><span data-lang-zh>战略启示</span></div>
                         <div class="insight-text">
-                            Users convert when they've exhausted free credits and want more. 
+                            <span data-lang-en>Users convert when they've exhausted free credits and want more. 
                             <strong style="color: var(--color-primary);">Monitor credit usage</strong> and trigger 
                             <strong style="color: var(--color-primary);">subscription reminder emails</strong> 
-                            when users approach 0 credits to maximize conversion.
+                            when users approach 0 credits to maximize conversion.</span>
+                            <span data-lang-zh>用户在用完免费积分后转化意愿最强。
+                            <strong style="color: var(--color-primary);">监控积分使用</strong>，当用户积分接近0时触发
+                            <strong style="color: var(--color-primary);">订阅提醒邮件</strong>以最大化转化。</span>
                         </div>
                     </div>
 
                     <div style="margin-top: 24px; padding: 16px 24px; background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-button); border-left: 4px solid #4CAF50;">
-                        <div style="font-size: 14px; color: #4CAF50; font-weight: 600;">🎯 ACTION ITEM</div>
+                        <div style="font-size: 14px; color: #4CAF50; font-weight: 600;">🎯 <span data-lang-en>ACTION ITEM</span><span data-lang-zh>行动项</span></div>
                         <div style="font-size: 16px; color: var(--color-text-primary); margin-top: 8px;">
-                            Set up automated email at 20, 10, and 0 credits remaining
+                            <span data-lang-en>Set up automated email at 20, 10, and 0 credits remaining</span>
+                            <span data-lang-zh>在剩余20、10、0积分时设置自动邮件提醒</span>
                         </div>
                     </div>
                 </div>
@@ -568,23 +638,23 @@
 
         <!-- Slide 4: Newsletter & Subscription -->
         <div class="slide slide-4" data-slide="4">
-            <h2 class="slide-title">Newsletter Impact on Conversion</h2>
-            <p class="slide-subtitle">Email engagement drives subscription behavior</p>
+            <h2 class="slide-title"><span data-lang-en>Newsletter Impact on Conversion</span><span data-lang-zh>邮件对转化的影响</span></h2>
+            <p class="slide-subtitle"><span data-lang-en>Email engagement drives subscription behavior</span><span data-lang-zh>邮件互动驱动订阅行为</span></p>
             
             <div style="max-width: 1100px; width: 100%; margin-top: 48px;">
                 <!-- Big comparison -->
                 <div class="comparison-grid">
                     <div class="comparison-card" style="border-color: var(--color-primary);">
-                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">📧 People who click newsletter</div>
+                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">📧 <span data-lang-en>People who click newsletter</span><span data-lang-zh>点击过邮件的用户</span></div>
                         <div class="big-number">21%</div>
-                        <div class="big-label">Subscription Rate</div>
-                        <div class="sub-stat">153 subscribers out of 743 clickers</div>
+                        <div class="big-label"><span data-lang-en>Subscription Rate</span><span data-lang-zh>订阅率</span></div>
+                        <div class="sub-stat"><span data-lang-en>153 subscribers out of 743 clickers</span><span data-lang-zh>743人点击，153人订阅</span></div>
                     </div>
                     <div class="comparison-card">
-                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">🚫 Did NOT Click</div>
+                        <div style="font-size: 16px; color: var(--color-text-secondary); margin-bottom: 16px;">🚫 <span data-lang-en>Did NOT Click</span><span data-lang-zh>未点击</span></div>
                         <div class="big-number" style="color: #666;">0.6%</div>
-                        <div class="big-label">Subscription Rate</div>
-                        <div class="sub-stat">272 subscribers out of 43,192 non-clickers</div>
+                        <div class="big-label"><span data-lang-en>Subscription Rate</span><span data-lang-zh>订阅率</span></div>
+                        <div class="sub-stat"><span data-lang-en>272 subscribers out of 43,192 non-clickers</span><span data-lang-zh>43,192人未点击，272人订阅</span></div>
                     </div>
                 </div>
 
@@ -594,7 +664,7 @@
                         <span style="font-size: 64px;">📬</span>
                         <div style="text-align: left;">
                             <div style="font-size: 48px; font-weight: 700; color: var(--color-primary);">35X</div>
-                            <div style="font-size: 18px; color: var(--color-text-primary);">more likely to subscribe from people who clicked newsletter</div>
+                            <div style="font-size: 18px; color: var(--color-text-primary);"><span data-lang-en>more likely to subscribe from people who clicked newsletter</span><span data-lang-zh>点击邮件的用户订阅概率更高</span></div>
                         </div>
                     </div>
                 </div>
@@ -602,19 +672,24 @@
                 <!-- Bottom insights -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
                     <div class="insight-box" style="margin-top: 0;">
-                        <div class="insight-label">💡 Key Insight</div>
+                        <div class="insight-label">💡 <span data-lang-en>Key Insight</span><span data-lang-zh>关键洞察</span></div>
                         <div class="insight-text">
-                            Users who engage with newsletters have <strong style="color: var(--color-primary);">dramatically higher</strong> conversion rates. 
-                            Email engagement is a strong predictor of subscription intent.
+                            <span data-lang-en>Users who engage with newsletters have <strong style="color: var(--color-primary);">dramatically higher</strong> conversion rates. 
+                            Email engagement is a strong predictor of subscription intent.</span>
+                            <span data-lang-zh>与邮件互动的用户转化率<strong style="color: var(--color-primary);">显著更高</strong>。
+                            邮件互动是订阅意向的强预测指标。</span>
                         </div>
                     </div>
                     <div style="padding: 24px; background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-button); border-left: 4px solid #4CAF50;">
-                        <div class="insight-label" style="color: #4CAF50;">🎯 Action Items</div>
+                        <div class="insight-label" style="color: #4CAF50;">🎯 <span data-lang-en>Action Items</span><span data-lang-zh>行动项</span></div>
                         <div class="insight-text">
                             <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
-                                <li>Increase email send frequency for engaged users</li>
-                                <li>A/B test subject lines to boost open rates</li>
-                                <li>Segment clickers for targeted offers</li>
+                                <li data-lang-en>Increase email send frequency for engaged users</li>
+                                <li data-lang-zh>增加活跃用户的邮件发送频率</li>
+                                <li data-lang-en>A/B test subject lines to boost open rates</li>
+                                <li data-lang-zh>A/B测试邮件标题以提高打开率</li>
+                                <li data-lang-en>Segment clickers for targeted offers</li>
+                                <li data-lang-zh>对点击用户进行分层精准营销</li>
                             </ul>
                         </div>
                     </div>
@@ -626,8 +701,8 @@
 
         <!-- Slide 5: Action Items Summary -->
         <div class="slide slide-1" data-slide="5">
-            <h2 class="slide-title">Action Items Summary</h2>
-            <p class="slide-subtitle">Key initiatives to drive conversion & retention</p>
+            <h2 class="slide-title"><span data-lang-en>Action Items Summary</span><span data-lang-zh>行动项总结</span></h2>
+            <p class="slide-subtitle"><span data-lang-en>Key initiatives to drive conversion & retention</span><span data-lang-zh>提升转化与留存的关键举措</span></p>
             
             <div style="max-width: 1100px; width: 100%; margin-top: 48px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
@@ -636,14 +711,17 @@
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
                             <div style="width: 56px; height: 56px; background: var(--color-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">💳</div>
                             <div>
-                                <h3 style="font-size: 22px; font-weight: 700; color: var(--color-primary); margin: 0;">Newsletter Credit-based Triggers</h3>
-                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;">77% convert after using all credits</p>
+                                <h3 style="font-size: 22px; font-weight: 700; color: var(--color-primary); margin: 0;"><span data-lang-en>Newsletter Credit-based Triggers</span><span data-lang-zh>基于积分的邮件触发</span></h3>
+                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;"><span data-lang-en>77% convert after using all credits</span><span data-lang-zh>77%用完积分后转化</span></p>
                             </div>
                         </div>
                         <ul style="font-size: 16px; color: var(--color-text-primary); line-height: 2; margin: 0; padding-left: 24px;">
-                            <li>Continue our bi-weekly scheduled newsletter</li>
-                            <li>Set up automated email at <strong style="color: var(--color-primary);">20, 10, and 0 credits</strong> remaining</li>
-                            <li>Monitor credit depletion rate for each user</li>
+                            <li data-lang-en>Continue our bi-weekly scheduled newsletter</li>
+                            <li data-lang-zh>继续双周定期邮件</li>
+                            <li data-lang-en>Set up automated email at <strong style="color: var(--color-primary);">20, 10, and 0 credits</strong> remaining</li>
+                            <li data-lang-zh>在剩余<strong style="color: var(--color-primary);">20、10、0积分</strong>时设置自动邮件</li>
+                            <li data-lang-en>Monitor credit depletion rate for each user</li>
+                            <li data-lang-zh>监控每个用户的积分消耗速率</li>
                         </ul>
                     </div>
 
@@ -652,14 +730,17 @@
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
                             <div style="width: 56px; height: 56px; background: #4CAF50; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">🚀</div>
                             <div>
-                                <h3 style="font-size: 22px; font-weight: 700; color: #4CAF50; margin: 0;">User Activation</h3>
-                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;">51% never used their credits</p>
+                                <h3 style="font-size: 22px; font-weight: 700; color: #4CAF50; margin: 0;"><span data-lang-en>User Activation</span><span data-lang-zh>用户激活</span></h3>
+                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;"><span data-lang-en>51% never used their credits</span><span data-lang-zh>51%用户从未使用积分</span></p>
                             </div>
                         </div>
                         <ul style="font-size: 16px; color: var(--color-text-primary); line-height: 2; margin: 0; padding-left: 24px;">
-                            <li>Launch re-engagement campaign for inactive users</li>
-                            <li>Improve onboarding to drive first credit usage</li>
-                            <li>Use paid media to highlight value proposition</li>
+                            <li data-lang-en>Launch re-engagement campaign for inactive users</li>
+                            <li data-lang-zh>对不活跃用户发起召回活动</li>
+                            <li data-lang-en>Improve onboarding to drive first credit usage</li>
+                            <li data-lang-zh>优化新手引导促进首次使用</li>
+                            <li data-lang-en>Use paid media to highlight value proposition</li>
+                            <li data-lang-zh>通过付费媒体突出价值主张</li>
                         </ul>
                     </div>
 
@@ -668,14 +749,17 @@
                         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
                             <div style="width: 56px; height: 56px; background: #2196F3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">📋</div>
                             <div>
-                                <h3 style="font-size: 22px; font-weight: 700; color: #2196F3; margin: 0;">Next Plan</h3>
-                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;">Upcoming initiatives</p>
+                                <h3 style="font-size: 22px; font-weight: 700; color: #2196F3; margin: 0;"><span data-lang-en>Next Plan</span><span data-lang-zh>下一步计划</span></h3>
+                                <p style="font-size: 14px; color: var(--color-text-secondary); margin: 4px 0 0 0;"><span data-lang-en>Upcoming initiatives</span><span data-lang-zh>即将开展的计划</span></p>
                             </div>
                         </div>
                         <ul style="font-size: 16px; color: var(--color-text-primary); line-height: 2; margin: 0; padding-left: 24px;">
-                            <li>Add a timestamp to all events so we can track engagement and patterns on the user level</li>
-                            <li>Highlight positive keywords in EDM and social media posts</li>
-                            <li>Add downloadable product to expand revenue source</li>
+                            <li data-lang-en>Add a timestamp to all events so we can track engagement and patterns on the user level</li>
+                            <li data-lang-zh>为所有事件添加时间戳，以便追踪用户级别的互动和行为模式</li>
+                            <li data-lang-en>Highlight positive keywords in EDM and social media posts</li>
+                            <li data-lang-zh>在EDM和社交媒体帖子中突出正向关键词</li>
+                            <li data-lang-en>Add downloadable product to expand revenue source</li>
+                            <li data-lang-zh>添加可下载产品以扩展收入来源</li>
                         </ul>
                     </div>
                 </div>
@@ -748,6 +832,38 @@
                 }, 100);
             });
         });
+
+        // Language Toggle
+        const langBtns = document.querySelectorAll('.lang-btn');
+        
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                
+                // Update button states
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Toggle body class for language
+                if (lang === 'zh') {
+                    document.body.classList.add('lang-zh');
+                } else {
+                    document.body.classList.remove('lang-zh');
+                }
+                
+                // Save preference
+                localStorage.setItem('lang', lang);
+            });
+        });
+
+        // Load saved language preference
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang === 'zh') {
+            document.body.classList.add('lang-zh');
+            langBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === 'zh');
+            });
+        }
     </script>
 </body>
 </html>
