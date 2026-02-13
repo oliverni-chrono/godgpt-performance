@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GodGPT 一月 Paid Media 复盘</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --color-primary: #FE5706;
+            --color-secondary: #FFA147;
+            --color-bg: #010100;
+            --color-surface: #1A1A1A;
+            --color-text: #E6E6E6;
+            --color-muted: #999999;
+            --radius: 12px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 48px 24px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .slide-title {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .slide-subtitle {
+            font-size: 18px;
+            color: var(--color-muted);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(254, 87, 6, 0.15);
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-secondary);
+            margin-bottom: 12px;
+        }
+
+        .card p, .card ul {
+            font-size: 15px;
+            color: var(--color-text);
+        }
+
+        .card ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li { margin-bottom: 6px; }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-box {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(254, 87, 6, 0.2);
+        }
+
+        .metric-box.hit { border-color: rgba(34, 197, 94, 0.5); }
+        .metric-box.warn { border-color: rgba(234, 179, 8, 0.5); }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .metric-value.good { color: #22c55e; }
+        .metric-value.warn { color: #eab308; }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--color-muted);
+            margin-top: 4px;
+        }
+
+        .metric-target {
+            font-size: 12px;
+            color: var(--color-muted);
+            margin-top: 2px;
+        }
+
+        .budget-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .budget-actual {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .budget-vs {
+            font-size: 18px;
+            color: var(--color-muted);
+        }
+
+        .budget-plan {
+            font-size: 24px;
+            color: var(--color-muted);
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dots a {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-surface);
+            border: 2px solid var(--color-muted);
+            transition: all 0.2s;
+        }
+
+        .nav-dots a:hover,
+        .nav-dots a.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .nav-arrows {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 10;
+        }
+
+        .nav-arrows button {
+            background: var(--color-surface);
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-arrows button:hover {
+            background: var(--color-primary);
+            color: var(--color-bg);
+        }
+
+        .highlight {
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .slide { padding: 32px 20px 100px; }
+            .metrics-row { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <section id="slide1" class="slide">
+        <h1 class="slide-title">一月 Paid Media 复盘</h1>
+        <p class="slide-subtitle">主要目标总结</p>
+
+        <h3 style="font-size: 16px; color: var(--color-muted); margin-bottom: 12px;">中上层漏斗</h3>
+        <div class="metrics-row">
+            <div class="metric-box hit">
+                <div class="metric-value good">1,694</div>
+                <div class="metric-label">Follower</div>
+                <div class="metric-target">目标 1,500 ✓</div>
+            </div>
+            <div class="metric-box hit">
+                <div class="metric-value good">26.7K</div>
+                <div class="metric-label">Engagement (like/share/comment)</div>
+                <div class="metric-target">目标 20K ✓</div>
+            </div>
+        </div>
+
+        <h3 style="font-size: 16px; color: var(--color-muted); margin-bottom: 12px;">下层漏斗</h3>
+        <div class="metrics-row">
+            <div class="metric-box hit">
+                <div class="metric-value good">3K</div>
+                <div class="metric-label">Install</div>
+                <div class="metric-target">目标 1.5K ✓</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">$5</div>
+                <div class="metric-label">Google SEM CPI</div>
+                <div class="metric-target">表现最好</div>
+            </div>
+            <div class="metric-box warn">
+                <div class="metric-value warn">$13</div>
+                <div class="metric-label">Apple Search Tab CPI</div>
+                <div class="metric-target">目标 $8，美国高约 20%</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <p>Meta 与 TikTok 的 CAC 高于 $8 目标，需在下阶段调整投放策略。</p>
+        </div>
+    </section>
+
+    <section id="slide2" class="slide">
+        <h1 class="slide-title">为什么超过预算</h1>
+        <p class="slide-subtitle">实际 $21,267 vs 预算 $20,000</p>
+
+        <div class="budget-line">
+            <span class="budget-actual">$21,267</span>
+            <span class="budget-vs">vs</span>
+            <span class="budget-plan">$20,000</span>
+        </div>
+
+        <div class="card">
+            <h3>1. 新渠道测试与学习期</h3>
+            <p>按各平台广告专家建议，在初期满足平台最低建议投放量，以快速通过 learning phase。新类别（Apple Search Tab、SEM、Google Perf Max、TikTok Smart+）第一周投放量较高，后期通过实时监控及时停投效果不佳广告，未造成花费进一步放大。</p>
+        </div>
+
+        <div class="card">
+            <h3>2. 预算编制口径与汇率</h3>
+            <p>做 budget plan 时未计入 <span class="highlight">9% GST</span>，同时受 <span class="highlight">汇率波动</span> 影响，导致实际支出略超原定预算。</p>
+        </div>
+    </section>
+
+    <section id="slide3" class="slide">
+        <h1 class="slide-title">一月 Paid Media 重心</h1>
+        <p class="slide-subtitle">一月新增渠道与社群策略</p>
+
+        <div class="card">
+            <h3>1. 新广告类别测试</h3>
+            <p><strong>Google SEM（首次投放）</strong> — CPI 表现较好的关键词：ChatGPT、Grok、OpenAI。用户搜索「ChatGPT」时可经我们链接下载 GodGPT App。</p>
+            <p style="margin-top: 12px;"><strong>Apple Search Tab（首次尝试）</strong> — 在「Wellness」分类下，用户可在顶部 Tab 看到 GodGPT 广告。该位置 CPI 较 Search Result 高约 30%，投放约 1 周后已暂停。</p>
+            <p style="margin-top: 12px;"><strong>上述两项合计花费 2,464 USD</strong>，占全月实际花费的 11%。</p>
+        </div>
+
+        <div class="card">
+            <h3>2. 增强 GodGPT 品牌声量与社群活跃度</h3>
+            <p>在 Instagram 与 TikTok 对 organic 内容进行推流（boost），提高社媒互动与品牌声量；结合 email retargeting 触达，构建更紧密的 seeding community，为后续付费转化及 onboarding 新的 vibecoding app 打基础。</p>
+        </div>
+    </section>
+
+    <section id="slide4" class="slide">
+        <h1 class="slide-title">Next Steps</h1>
+        <p class="slide-subtitle">二月及后续行动</p>
+
+        <div class="card">
+            <h3>1. 下层漏斗投放调整</h3>
+            <ul>
+                <li><strong>停止</strong>在 Meta 和 TikTok 上的下层 paid campaign 投放。</li>
+                <li><strong>Apple：</strong>停投 Search Tab；在美国针对人群与搜索关键词优化，设置 <strong>$8 CPI cap</strong> 控制超支。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>2. Google SEM</h3>
+            <p>仅投放当前 CPI 表现较好的关键词，并设置 CPI cap，更好控制投放量与成本。</p>
+        </div>
+
+        <div class="card">
+            <h3>3. 品牌与社群</h3>
+            <p>保持 Instagram / TikTok organic boost 与 bi-weekly newsletter，维持高社群活跃度，为付费转化与新品 onboarding 做准备。</p>
+        </div>
+    </section>
+
+    <nav class="nav-dots" aria-label="Slide navigation">
+        <a href="#slide1" class="active" aria-current="true">Slide 1</a>
+        <a href="#slide2">Slide 2</a>
+        <a href="#slide3">Slide 3</a>
+        <a href="#slide4">Slide 4</a>
+    </nav>
+
+    <div class="nav-arrows">
+        <button type="button" id="prev">上一页</button>
+        <button type="button" id="next">下一页</button>
+    </div>
+
+    <script>
+        (function () {
+            var slides = ['slide1', 'slide2', 'slide3', 'slide4'];
+            var dots = document.querySelectorAll('.nav-dots a');
+            var prev = document.getElementById('prev');
+            var next = document.getElementById('next');
+
+            function index() {
+                var hash = window.location.hash.slice(1) || 'slide1';
+                var i = slides.indexOf(hash);
+                return i >= 0 ? i : 0;
+            }
+
+            function go(i) {
+                i = Math.max(0, Math.min(i, slides.length - 1));
+                window.location.hash = slides[i];
+                dots.forEach(function (d, j) {
+                    d.classList.toggle('active', j === i);
+                    d.setAttribute('aria-current', j === i ? 'true' : null);
+                });
+            }
+
+            dots.forEach(function (d, i) {
+                d.href = '#' + slides[i];
+                d.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    go(i);
+                });
+            });
+
+            prev.addEventListener('click', function () { go(index() - 1); });
+            next.addEventListener('click', function () { go(index() + 1); });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowLeft') go(index() - 1);
+                if (e.key === 'ArrowRight') go(index() + 1);
+            });
+
+            window.addEventListener('hashchange', function () {
+                go(index());
+            });
+
+            go(index());
+        })();
+    </script>
+</body>
+</html>
