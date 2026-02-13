@@ -25,10 +25,19 @@
             background: var(--color-bg);
             color: var(--color-text);
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            width: 400vw;
+            transition: transform 0.4s ease-out;
+            will-change: transform;
         }
 
         .slide {
+            flex: 0 0 100vw;
+            width: 100vw;
             min-height: 100vh;
             padding: 48px 24px 80px;
             display: flex;
@@ -145,32 +154,6 @@
             color: var(--color-muted);
         }
 
-        .nav-dots {
-            position: fixed;
-            right: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .nav-dots a {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--color-surface);
-            border: 2px solid var(--color-muted);
-            transition: all 0.2s;
-        }
-
-        .nav-dots a:hover,
-        .nav-dots a.active {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
-        }
-
         .nav-arrows {
             position: fixed;
             bottom: 24px;
@@ -210,6 +193,7 @@
     </style>
 </head>
 <body>
+    <div class="slider" id="slider">
     <section id="slide1" class="slide">
         <h1 class="slide-title">一月 Paid Media 复盘</h1>
         <p class="slide-subtitle">主要目标总结</p>
@@ -235,58 +219,68 @@
                 <div class="metric-label">Install</div>
                 <div class="metric-target">目标 1.5K ✓</div>
             </div>
-            <div class="metric-box">
-                <div class="metric-value">$5</div>
+            <div class="metric-box hit">
+                <div class="metric-value good">$4.2</div>
                 <div class="metric-label">Google SEM CPI</div>
                 <div class="metric-target">表现最好</div>
             </div>
             <div class="metric-box warn">
                 <div class="metric-value warn">$13</div>
                 <div class="metric-label">Apple Search Tab CPI</div>
-                <div class="metric-target">目标 $8，美国高约 20%</div>
+                <div class="metric-target">目标 $5，美国高约 20%</div>
             </div>
         </div>
 
         <div class="card">
-            <p>Meta 与 TikTok 的 CAC 高于 $8 目标，需在下阶段调整投放策略。</p>
+            <p>Meta 与 TikTok 的 CAC 高于 $5 目标，需在下阶段调整投放策略。</p>
         </div>
     </section>
 
     <section id="slide2" class="slide">
         <h1 class="slide-title">为什么超过预算</h1>
-        <p class="slide-subtitle">实际 $21,267 vs 预算 $20,000</p>
+        <p class="slide-subtitle">$23,259.60 美元（1月实际花费 $21,267，剩余 $1,992 为 12/25–12/31 花费）</p>
 
         <div class="budget-line">
-            <span class="budget-actual">$21,267</span>
+            <span class="budget-actual">$21,267（19,511 w/o GST）</span>
             <span class="budget-vs">vs</span>
             <span class="budget-plan">$20,000</span>
         </div>
 
         <div class="card">
-            <h3>1. 新渠道测试与学习期</h3>
+            <h3>1. 新渠道测试与学习期（合计花费 $2,464，占全月实际花费的 12%）</h3>
             <p>按各平台广告专家建议，在初期满足平台最低建议投放量，以快速通过 learning phase。新类别（Apple Search Tab、SEM、Google Perf Max、TikTok Smart+）第一周投放量较高，后期通过实时监控及时停投效果不佳广告，未造成花费进一步放大。</p>
         </div>
 
         <div class="card">
-            <h3>2. 预算编制口径与汇率</h3>
+            <h3>2. Meta 针对人群做 A/B testing（$1000/2 weeks）</h3>
+            <p>通过针对人群做 A/B 测试，识别并放大高转化受众的行为信号，找到更精准的投放人群，从而 <span class="highlight">降低 CAC</span>、<span class="highlight">提升 CVR</span>，提高付费投放效率。</p>
+        </div>
+
+        <div class="card">
+            <h3>3. 预算编制口径与汇率</h3>
             <p>做 budget plan 时未计入 <span class="highlight">9% GST</span>，同时受 <span class="highlight">汇率波动</span> 影响，导致实际支出略超原定预算。</p>
         </div>
     </section>
 
     <section id="slide3" class="slide">
-        <h1 class="slide-title">一月 Paid Media 重心</h1>
-        <p class="slide-subtitle">一月新增渠道与社群策略</p>
+        <h1 class="slide-title">一月 Paid Media 亮点</h1>
 
         <div class="card">
             <h3>1. 新广告类别测试</h3>
             <p><strong>Google SEM（首次投放）</strong> — CPI 表现较好的关键词：ChatGPT、Grok、OpenAI。用户搜索「ChatGPT」时可经我们链接下载 GodGPT App。</p>
             <p style="margin-top: 12px;"><strong>Apple Search Tab（首次尝试）</strong> — 在「Wellness」分类下，用户可在顶部 Tab 看到 GodGPT 广告。该位置 CPI 较 Search Result 高约 30%，投放约 1 周后已暂停。</p>
-            <p style="margin-top: 12px;"><strong>上述两项合计花费 2,464 USD</strong>，占全月实际花费的 11%。</p>
         </div>
 
         <div class="card">
-            <h3>2. 增强 GodGPT 品牌声量与社群活跃度</h3>
-            <p>在 Instagram 与 TikTok 对 organic 内容进行推流（boost），提高社媒互动与品牌声量；结合 email retargeting 触达，构建更紧密的 seeding community，为后续付费转化及 onboarding 新的 vibecoding app 打基础。</p>
+            <h3>2. A/B testing 提供针对人群方向</h3>
+            <p>Meta traffic 广告 A/B 测试显示：household income 在前 50%、曾搜索 wellness 相关话题的人群，相较 broad 人群 <span class="highlight">CAC 低 28%</span>。我们进一步将该人群设置应用在其他 social media 上。</p>
+        </div>
+
+        <div class="card">
+            <h3>3. 增强 GodGPT 品牌声量与社群活跃度</h3>
+            <p><strong>品牌声量</strong> — 在 Instagram 与 TikTok 对表现优异的自然内容进行推流（boost），达到放大品牌声量效果，并且提高社媒互动和 Discord GodGPT 讨论群。</p>
+            <p style="margin-top: 12px;"><strong>Email retargeting</strong> — 结合 email retargeting 触达，构建更紧密的 seeding community，为后续付费转化及 onboarding 新的 vibecoding app 打基础。</p>
+            <p style="margin-top: 12px;"><strong>成功达成 follower 和 engagement 目标。</strong></p>
         </div>
     </section>
 
@@ -312,13 +306,7 @@
             <p>保持 Instagram / TikTok organic boost 与 bi-weekly newsletter，维持高社群活跃度，为付费转化与新品 onboarding 做准备。</p>
         </div>
     </section>
-
-    <nav class="nav-dots" aria-label="Slide navigation">
-        <a href="#slide1" class="active" aria-current="true">Slide 1</a>
-        <a href="#slide2">Slide 2</a>
-        <a href="#slide3">Slide 3</a>
-        <a href="#slide4">Slide 4</a>
-    </nav>
+    </div>
 
     <div class="nav-arrows">
         <button type="button" id="prev">上一页</button>
@@ -328,6 +316,7 @@
     <script>
         (function () {
             var slides = ['slide1', 'slide2', 'slide3', 'slide4'];
+            var slider = document.getElementById('slider');
             var dots = document.querySelectorAll('.nav-dots a');
             var prev = document.getElementById('prev');
             var next = document.getElementById('next');
@@ -340,6 +329,7 @@
 
             function go(i) {
                 i = Math.max(0, Math.min(i, slides.length - 1));
+                if (slider) slider.style.transform = 'translateX(-' + i * 100 + 'vw)';
                 window.location.hash = slides[i];
                 dots.forEach(function (d, j) {
                     d.classList.toggle('active', j === i);
