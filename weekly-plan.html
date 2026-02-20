@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Ads Plan - CEO Dashboard</title>
+    <title>Weekly Ads Plan vs Actuals</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,7 +24,7 @@
             --accent-purple: #9333EA;
             --accent-pink: #EC4899;
             --accent-cyan: #06B6D4;
-            uvx --version         --accent-orange: #F97316;
+            --accent-orange: #F97316;
             --accent-red: #EF4444;
         }
 
@@ -73,6 +73,42 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        .section-title.weekly-target {
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-blue);
+            display: inline-block;
+        }
+
+        .section-title.weekly-actuals {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-green);
+            display: inline-block;
+        }
+
+        .section-title.top-channel {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-green);
+            display: inline-block;
+        }
+
+        .section-title.bottom-channel {
+            color: var(--accent-red);
+            background: rgba(239, 68, 68, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-red);
+            display: inline-block;
         }
 
         /* KPI Cards */
@@ -244,6 +280,48 @@
             margin-bottom: 48px;
         }
 
+        .plan-section {
+            margin-bottom: 48px;
+        }
+
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .plan-table th,
+        .plan-table td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plan-table th {
+            background: rgba(249, 158, 11, 0.12);
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .plan-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .plan-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .plan-table .total-row td {
+            font-weight: 600;
+            background: rgba(249, 158, 11, 0.08);
+        }
+
         .budget-bar-container {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -333,281 +411,252 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>📊 Weekly Ads Plan</h1>
-            <span class="date-badge">Week 22/12/2025 - 28/12/2025</span>
+            <h1>📊 Weekly Ads Plan vs Actuals</h1>
+            <span class="date-badge">2/2 – 2/8</span>
         </header>
 
-        <!-- Section 1: Weekly Total Targets -->
+        <!-- Section 1: Weekly Target -->
         <section class="kpi-section">
-            <h2 class="section-title">Weekly Total Target</h2>
+            <h2 class="section-title weekly-target">Weekly Target</h2>
             <div class="kpi-grid">
                 <div class="kpi-card revenue">
                     <div class="kpi-icon">💰</div>
-                    <div class="kpi-value">$875</div>
+                    <div class="kpi-value">$800</div>
                     <div class="kpi-label">Revenue</div>
                 </div>
-
                 <div class="kpi-card installs">
                     <div class="kpi-icon">📱</div>
-                    <div class="kpi-value">600</div>
+                    <div class="kpi-value">980</div>
                     <div class="kpi-label">App Installs</div>
                 </div>
-
                 <div class="kpi-card followers">
                     <div class="kpi-icon">👥</div>
-                    <div class="kpi-value">700</div>
+                    <div class="kpi-value">900</div>
                     <div class="kpi-label">Followers</div>
                 </div>
-
                 <div class="kpi-card subscribers">
                     <div class="kpi-icon">⭐</div>
                     <div class="kpi-value">30</div>
                     <div class="kpi-label">Subscribers</div>
                 </div>
             </div>
-
             <div style="text-align: center; margin-top: 24px;">
                 <span style="background: rgba(249, 158, 11, 0.2); color: var(--accent-gold); padding: 12px 24px; border-radius: 12px; font-size: 20px; font-weight: 600;">
-                    Total Media Budget: $4,100
+                    Total Media Budget: $3,400
                 </span>
             </div>
         </section>
 
-        <!-- Product Budget Distribution -->
-        <section class="budget-bar-section">
-            <h2 class="section-title">Budget by Product</h2>
-            <div class="budget-bar-container">
-                <!-- GodGPT -->
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: var(--accent-gold);">🔮 GodGPT</span>
-                        <span style="font-weight: 700; font-size: 18px;">$3,600 <span style="color: var(--text-secondary); font-size: 14px; font-weight: 400;">(88%)</span></span>
-                    </div>
-                    <div style="background: rgba(249, 158, 11, 0.2); border-radius: 8px; height: 40px; overflow: hidden;">
-                        <div style="width: 88%; height: 100%; background: linear-gradient(90deg, #F59E0B, #FBBF24); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #000;">TikTok + Meta + Reddit + Google + Apple</div>
-                    </div>
+        <!-- Section 2: Weekly Actuals -->
+        <section class="kpi-section">
+            <h2 class="section-title weekly-actuals">Weekly Actuals</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card revenue">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-value">$796 <span style="font-size: 20px; color: var(--text-secondary); font-weight: 500;">(-1%)</span></div>
+                    <div class="kpi-label">Revenue</div>
                 </div>
-
-                <!-- Lumen -->
-                <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: var(--accent-cyan);">✨ Lumen</span>
-                        <span style="font-weight: 700; font-size: 18px;">$500 <span style="color: var(--text-secondary); font-size: 14px; font-weight: 400;">(12%)</span></span>
-                    </div>
-                    <div style="background: rgba(6, 182, 212, 0.2); border-radius: 8px; height: 40px; overflow: hidden;">
-                        <div style="width: 12%; height: 100%; background: linear-gradient(90deg, #06B6D4, #22D3EE); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #000;">TikTok Boost</div>
-                    </div>
+                <div class="kpi-card installs">
+                    <div class="kpi-icon">📱</div>
+                    <div class="kpi-value">823 <span style="font-size: 20px; color: var(--accent-red); font-weight: 500;">(-16%)</span></div>
+                    <div class="kpi-label">App Installs</div>
                 </div>
+                <div class="kpi-card followers">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-value">1,116 <span style="font-size: 20px; color: var(--accent-green); font-weight: 500;">(+24%)</span></div>
+                    <div class="kpi-label">Followers</div>
+                </div>
+                <div class="kpi-card subscribers">
+                    <div class="kpi-icon">⭐</div>
+                    <div class="kpi-value">21 <span style="font-size: 20px; color: var(--accent-red); font-weight: 500;">(-30%)</span></div>
+                    <div class="kpi-label">Subscribers</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 24px;">
+                <span style="background: rgba(249, 158, 11, 0.2); color: var(--accent-gold); padding: 12px 24px; border-radius: 12px; font-size: 20px; font-weight: 600;">
+                    Total Media Budget: $3,405 <span style="color: var(--text-secondary); font-size: 16px; font-weight: 500;">(0%)</span>
+                </span>
             </div>
         </section>
 
-        <!-- Funnel Budget Distribution -->
+        <!-- Spending by Funnel (Planned vs Actual) -->
         <section class="budget-bar-section">
-            <h2 class="section-title">Budget by Funnel Stage</h2>
+            <h2 class="section-title">Spending by funnel</h2>
             <div class="budget-bar-container">
                 <!-- Upper Funnel -->
                 <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: var(--accent-purple);">🔝 Upper Funnel (Awareness)</span>
-                        <span style="font-weight: 700; font-size: 18px;">$900 <span style="color: var(--text-secondary); font-size: 14px; font-weight: 400;">(22%)</span></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-purple);">🔝 Upper Funnel (Follow)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$100</strong> · <span style="color: var(--accent-gold);">Actual <strong>$82</strong></span> <span style="font-size: 14px;">(-22%)</span></span>
                     </div>
-                    <div style="background: rgba(147, 51, 234, 0.2); border-radius: 8px; height: 32px; overflow: hidden;">
-                        <div style="width: 22%; height: 100%; background: linear-gradient(90deg, #9333EA, #C084FC); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">TikTok Boost + Meta Profile</div>
+                    <div style="background: rgba(147, 51, 234, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center; position: relative;">
+                        <div style="width: 3%; height: 100%; background: linear-gradient(90deg, #9333EA, #C084FC); min-width: 80px; display: flex; align-items: center; padding-left: 10px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">TikTok</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Mid Funnel -->
                 <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: var(--accent-blue);">🎯 Mid Funnel (Consideration)</span>
-                        <span style="font-weight: 700; font-size: 18px;">$2,400 <span style="color: var(--text-secondary); font-size: 14px; font-weight: 400;">(59%)</span></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-blue);">🎯 Mid Funnel (Traffic retargeting + App install)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$1,300</strong> · <span style="color: var(--accent-gold);">Actual <strong>$1,309</strong></span> <span style="font-size: 14px;">(+0.7%)</span></span>
                     </div>
-                    <div style="background: rgba(59, 130, 246, 0.2); border-radius: 8px; height: 32px; overflow: hidden;">
-                        <div style="width: 59%; height: 100%; background: linear-gradient(90deg, #3B82F6, #60A5FA); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">TikTok Lumen + Meta App Install + Reddit + Apple Store</div>
+                    <div style="background: rgba(59, 130, 246, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center;">
+                        <div style="width: 38%; height: 100%; background: linear-gradient(90deg, #3B82F6, #60A5FA); display: flex; align-items: center; padding-left: 12px; min-width: 120px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Instagram, Meta, Apple Store</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Lower Funnel -->
                 <div style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: 600; color: var(--accent-green);">💰 Lower Funnel (Conversion)</span>
-                        <span style="font-weight: 700; font-size: 18px;">$800 <span style="color: var(--text-secondary); font-size: 14px; font-weight: 400;">(19%)</span></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-green);">💰 Lower Funnel (In-app event, Purchase)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$1,952</strong> · <span style="color: var(--accent-gold);">Actual <strong>$2,014</strong></span> <span style="font-size: 14px;">(+3.1%)</span></span>
                     </div>
-                    <div style="background: rgba(16, 185, 129, 0.2); border-radius: 8px; height: 32px; overflow: hidden;">
-                        <div style="width: 19%; height: 100%; background: linear-gradient(90deg, #10B981, #34D399); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">Google Search In-app Purchase Ads</div>
+                    <div style="background: rgba(16, 185, 129, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center;">
+                        <div style="width: 57%; height: 100%; background: linear-gradient(90deg, #10B981, #34D399); display: flex; align-items: center; padding-left: 12px; min-width: 140px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Google Search, Perf Max, SEM</span>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- Section 2: Channel Breakdown -->
+        <!-- Top / Bottom Channel Performance -->
         <section class="channel-section">
-            <h2 class="section-title">Channel Breakdown</h2>
+            <h2 class="section-title top-channel">Top channel performance</h2>
             <div class="channel-grid">
                 <!-- Apple Store -->
                 <div class="channel-card">
                     <div class="channel-icon apple">🍎</div>
                     <div class="channel-info">
                         <div class="channel-name">Apple Store</div>
-                        <div class="channel-product">Godgpt · App Install</div>
-                        <div class="channel-metrics">
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-green);">$250</span>
-                                <span class="metric-label">Revenue</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-blue);">300</span>
-                                <span class="metric-label">Installs</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="channel-budget">
-                        <div class="budget-value">$1,200</div>
-                        <div class="budget-label">Budget</div>
-                    </div>
-                </div>
-
-                <!-- TikTok (Combined) -->
-                <div class="channel-card" style="grid-column: span 2;">
-                    <div class="channel-icon tiktok">🎵</div>
-                    <div class="channel-info" style="flex: 1;">
-                        <div class="channel-name">TikTok</div>
-                        <div class="channel-product">Total Budget: $1,000</div>
-                        
-                        <!-- Sub-boxes for Lumen and Godgpt -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
-                            <!-- Lumen Sub-box -->
-                            <div style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="font-weight: 600; color: var(--accent-cyan); margin-bottom: 12px;">✨ Lumen</div>
-                                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                                        <div class="channel-metric">
-                                            <span class="metric-value" style="color: var(--accent-gold);">38</span>
-                                            <span class="metric-label">Waitlist Signup</span>
-                                        </div>
-                                        <div class="channel-metric">
-                                            <span class="metric-value" style="color: var(--accent-purple);">167</span>
-                                            <span class="metric-label">Followers</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--accent-gold);">$500</div>
-                                    <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Budget</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Godgpt Sub-box -->
-                            <div style="background: rgba(249, 158, 11, 0.15); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="font-weight: 600; color: var(--accent-gold); margin-bottom: 12px;">🔮 GodGPT</div>
-                                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                                        <div class="channel-metric">
-                                            <span class="metric-value" style="color: var(--accent-green);">$20</span>
-                                            <span class="metric-label">Revenue</span>
-                                        </div>
-                                        <div class="channel-metric">
-                                            <span class="metric-value" style="color: var(--accent-blue);">10</span>
-                                            <span class="metric-label">Installs</span>
-                                        </div>
-                                        <div class="channel-metric">
-                                            <span class="metric-value" style="color: var(--accent-purple);">30</span>
-                                            <span class="metric-label">Followers</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--accent-gold);">$500</div>
-                                    <div style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Budget</div>
-                                </div>
-                            </div>
+                        <div class="channel-product">App store search ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Revenue:</strong> Planned 150 vs Actual 260 <span style="color: var(--accent-green);">(+73%)</span></p>
+                            <p style="margin-bottom: 8px; color: var(--text-secondary);"><strong>High performing keyword:</strong> Chat AI, perplexity, hallow, gemini ai</p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Insights:</strong> Bid on competitor keyword with cost cap</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Google Search -->
+                <!-- TikTok -->
                 <div class="channel-card">
-                    <div class="channel-icon google">🔍</div>
+                    <div class="channel-icon tiktok">🎵</div>
                     <div class="channel-info">
-                        <div class="channel-name">Google Search</div>
-                        <div class="channel-product">Godgpt · App Install + iAEO</div>
-                        <div class="channel-metrics">
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-green);">$150</span>
-                                <span class="metric-label">Revenue</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-blue);">170</span>
-                                <span class="metric-label">Installs</span>
-                            </div>
+                        <div class="channel-name">TikTok</div>
+                        <div class="channel-product">TikTok follower ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Cost per follower:</strong> Planned 0.15 vs Actual 0.1 <span style="color: var(--accent-green);">(-43%)</span></p>
+                            <p style="margin-bottom: 8px; color: var(--text-secondary);"><strong>High engaging content:</strong> Real people, real experiences = immediate credibility</p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Insights:</strong> Only boost high-performing organic posts to amplify effect</p>
                         </div>
                     </div>
-                    <div class="channel-budget">
-                        <div class="budget-value">$800</div>
-                        <div class="budget-label">Budget</div>
-                    </div>
                 </div>
+            </div>
 
+            <h2 class="section-title bottom-channel" style="margin-top: 40px;">Bottom channel performance</h2>
+            <div class="channel-grid">
                 <!-- Meta -->
                 <div class="channel-card">
                     <div class="channel-icon meta">📘</div>
                     <div class="channel-info">
-                        <div class="channel-name">Meta (IG/FB)</div>
-                        <div class="channel-product">Godgpt · Boost + App Install</div>
-                        <div class="channel-metrics">
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-green);">$60</span>
-                                <span class="metric-label">Revenue</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-blue);">40</span>
-                                <span class="metric-label">Installs</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-purple);">100</span>
-                                <span class="metric-label">Followers</span>
-                            </div>
+                        <div class="channel-name">Meta</div>
+                        <div class="channel-product">Meta traffic retargeting ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Cost per install:</strong> Planned 10 vs Actual 32 <span style="color: var(--accent-red);">(+220%)</span></p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Learnings:</strong> Small retargeting pool drove up CPI. Need to expand audience pool and retarget with purchase event</p>
                         </div>
-                    </div>
-                    <div class="channel-budget">
-                        <div class="budget-value">$1,000</div>
-                        <div class="budget-label">Budget</div>
                     </div>
                 </div>
 
-                <!-- Reddit -->
+                <!-- Google -->
                 <div class="channel-card">
-                    <div class="channel-icon reddit">🔴</div>
+                    <div class="channel-icon google">🔍</div>
                     <div class="channel-info">
-                        <div class="channel-name">Reddit</div>
-                        <div class="channel-product">Godgpt · App Install</div>
-                        <div class="channel-metrics">
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-green);">$10</span>
-                                <span class="metric-label">Revenue</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-blue);">5</span>
-                                <span class="metric-label">Installs</span>
-                            </div>
-                            <div class="channel-metric">
-                                <span class="metric-value" style="color: var(--accent-purple);">10</span>
-                                <span class="metric-label">Followers</span>
-                            </div>
+                        <div class="channel-name">Google</div>
+                        <div class="channel-product">Google Performance Max</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Revenue:</strong> Target 100 vs Actual 32 <span style="color: var(--accent-red);">(-68%)</span></p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Learnings:</strong> Limited control over targeting is not suitable for niche vertical</p>
                         </div>
-                    </div>
-                    <div class="channel-budget">
-                        <div class="budget-value">$100</div>
-                        <div class="budget-label">Budget</div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Summary of channel spending -->
+        <section class="plan-section">
+            <h2 class="section-title">Summary of channel spending</h2>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;">
+                <table class="plan-table">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>2/2-2/8 spending</th>
+                            <th>Next week planned spending</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TikTok</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>Maintain with top engaging content</td>
+                        </tr>
+                        <tr>
+                            <td>Instagram</td>
+                            <td>150</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>Meta</td>
+                            <td>150</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>Google search</td>
+                            <td>1,000</td>
+                            <td>1,000</td>
+                            <td>Maintain</td>
+                        </tr>
+                        <tr>
+                            <td>Google Perf max</td>
+                            <td>500</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>SEM</td>
+                            <td>500</td>
+                            <td>500</td>
+                            <td>Refine by adding long tail keyword</td>
+                        </tr>
+                        <tr>
+                            <td>Apple store</td>
+                            <td>1,000</td>
+                            <td>1,500 <span style="color: var(--accent-green);">▲</span></td>
+                            <td>Increase 500 spending in MY, SG, ID</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Total</td>
+                            <td>3,400</td>
+                            <td>3,100</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="footer">
-            <p>Data Source: <a href="https://docs.google.com/spreadsheets/d/1-c3h0iCHQt2iwALdPyNJQLsFOMFG5IbByHfRD2SIZMs/edit?gid=0#gid=0" target="_blank">Weekly Planning Sheet</a></p>
+            <p>Data Source: <a href="https://docs.google.com/spreadsheets/d/1-c3h0iCHQt2iwALdPyNJQLsFOMFG5IbByHfRD2SIZMs/edit?gid=104153573#gid=104153573" target="_blank">Weekly Planning Sheet (2/20 tab)</a></p>
         </footer>
     </div>
 </body>
