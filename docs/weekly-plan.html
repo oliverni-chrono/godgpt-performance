@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Ads Plan vs Actuals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0A0A0F;
+            --bg-card: rgba(26, 26, 46, 0.6);
+            --border: #2D2D44;
+            --text-primary: #F5F5F7;
+            --text-secondary: #9CA3AF;
+            --accent-gold: #F59E0B;
+            --accent-green: #10B981;
+            --accent-blue: #3B82F6;
+            --accent-purple: #9333EA;
+            --accent-pink: #EC4899;
+            --accent-cyan: #06B6D4;
+            --accent-orange: #F97316;
+            --accent-red: #EF4444;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #1A1A2E 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F5F5F7, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header .date-badge {
+            display: inline-block;
+            background: var(--accent-purple);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title.weekly-target {
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-blue);
+            display: inline-block;
+        }
+
+        .section-title.weekly-actuals {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-green);
+            display: inline-block;
+        }
+
+        .section-title.top-channel {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-green);
+            display: inline-block;
+        }
+
+        .section-title.bottom-channel {
+            color: var(--accent-red);
+            background: rgba(239, 68, 68, 0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-red);
+            display: inline-block;
+        }
+
+        /* KPI Cards */
+        .kpi-section {
+            margin-bottom: 56px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .kpi-card.revenue::before { background: var(--accent-green); }
+        .kpi-card.installs::before { background: var(--accent-blue); }
+        .kpi-card.followers::before { background: var(--accent-purple); }
+        .kpi-card.subscribers::before { background: var(--accent-gold); }
+
+        .kpi-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .kpi-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .kpi-card.revenue .kpi-value { color: var(--accent-green); }
+        .kpi-card.installs .kpi-value { color: var(--accent-blue); }
+        .kpi-card.followers .kpi-value { color: var(--accent-purple); }
+        .kpi-card.subscribers .kpi-value { color: var(--accent-gold); }
+
+        .kpi-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .kpi-budget {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .kpi-budget strong {
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        /* Channel Breakdown */
+        .channel-section {
+            margin-bottom: 48px;
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .channel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .channel-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .channel-icon.tiktok { background: linear-gradient(135deg, #25F4EE, #FE2C55); }
+        .channel-icon.meta { background: linear-gradient(135deg, #0081FB, #00C6FF); }
+        .channel-icon.reddit { background: #FF4500; }
+        .channel-icon.google { background: linear-gradient(135deg, #4285F4, #34A853); }
+        .channel-icon.apple { background: linear-gradient(135deg, #1D1D1F, #555); }
+        .channel-icon.organic { background: linear-gradient(135deg, #10B981, #059669); }
+
+        .channel-info {
+            flex: 1;
+        }
+
+        .channel-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .channel-product {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .channel-metrics {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .channel-metric {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .channel-budget {
+            text-align: right;
+        }
+
+        .budget-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .budget-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Budget Bar */
+        .budget-bar-section {
+            margin-bottom: 48px;
+        }
+
+        .plan-section {
+            margin-bottom: 48px;
+        }
+
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .plan-table th,
+        .plan-table td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plan-table th {
+            background: rgba(249, 158, 11, 0.12);
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .plan-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .plan-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .plan-table .total-row td {
+            font-weight: 600;
+            background: rgba(249, 158, 11, 0.08);
+        }
+
+        .budget-bar-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .budget-bar {
+            display: flex;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .budget-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .budget-segment:hover {
+            filter: brightness(1.2);
+        }
+
+        .budget-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent-purple);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .channel-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .kpi-value {
+                font-size: 36px;
+            }
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📊 Weekly Ads Plan vs Actuals</h1>
+            <span class="date-badge">2/2 – 2/8</span>
+        </header>
+
+        <!-- Section 1: Weekly Target -->
+        <section class="kpi-section">
+            <h2 class="section-title weekly-target">Weekly Target</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card revenue">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-value">$800</div>
+                    <div class="kpi-label">Revenue</div>
+                </div>
+                <div class="kpi-card installs">
+                    <div class="kpi-icon">📱</div>
+                    <div class="kpi-value">980</div>
+                    <div class="kpi-label">App Installs</div>
+                </div>
+                <div class="kpi-card followers">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-value">900</div>
+                    <div class="kpi-label">Followers</div>
+                </div>
+                <div class="kpi-card subscribers">
+                    <div class="kpi-icon">⭐</div>
+                    <div class="kpi-value">30</div>
+                    <div class="kpi-label">Subscribers</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 24px;">
+                <span style="background: rgba(249, 158, 11, 0.2); color: var(--accent-gold); padding: 12px 24px; border-radius: 12px; font-size: 20px; font-weight: 600;">
+                    Total Media Budget: $3,400
+                </span>
+            </div>
+        </section>
+
+        <!-- Section 2: Weekly Actuals -->
+        <section class="kpi-section">
+            <h2 class="section-title weekly-actuals">Weekly Actuals</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card revenue">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-value">$796 <span style="font-size: 20px; color: var(--text-secondary); font-weight: 500;">(-1%)</span></div>
+                    <div class="kpi-label">Revenue</div>
+                </div>
+                <div class="kpi-card installs">
+                    <div class="kpi-icon">📱</div>
+                    <div class="kpi-value">823 <span style="font-size: 20px; color: var(--accent-red); font-weight: 500;">(-16%)</span></div>
+                    <div class="kpi-label">App Installs</div>
+                </div>
+                <div class="kpi-card followers">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-value">1,116 <span style="font-size: 20px; color: var(--accent-green); font-weight: 500;">(+24%)</span></div>
+                    <div class="kpi-label">Followers</div>
+                </div>
+                <div class="kpi-card subscribers">
+                    <div class="kpi-icon">⭐</div>
+                    <div class="kpi-value">21 <span style="font-size: 20px; color: var(--accent-red); font-weight: 500;">(-30%)</span></div>
+                    <div class="kpi-label">Subscribers</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 24px;">
+                <span style="background: rgba(249, 158, 11, 0.2); color: var(--accent-gold); padding: 12px 24px; border-radius: 12px; font-size: 20px; font-weight: 600;">
+                    Total Media Budget: $3,405 <span style="color: var(--text-secondary); font-size: 16px; font-weight: 500;">(0%)</span>
+                </span>
+            </div>
+        </section>
+
+        <!-- Spending by Funnel (Planned vs Actual) -->
+        <section class="budget-bar-section">
+            <h2 class="section-title">Spending by funnel</h2>
+            <div class="budget-bar-container">
+                <!-- Upper Funnel -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-purple);">🔝 Upper Funnel (Follow)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$100</strong> · <span style="color: var(--accent-gold);">Actual <strong>$82</strong></span> <span style="font-size: 14px;">(-22%)</span></span>
+                    </div>
+                    <div style="background: rgba(147, 51, 234, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center; position: relative;">
+                        <div style="width: 3%; height: 100%; background: linear-gradient(90deg, #9333EA, #C084FC); min-width: 80px; display: flex; align-items: center; padding-left: 10px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">TikTok</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mid Funnel -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-blue);">🎯 Mid Funnel (Traffic retargeting + App install)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$1,300</strong> · <span style="color: var(--accent-gold);">Actual <strong>$1,309</strong></span> <span style="font-size: 14px;">(+0.7%)</span></span>
+                    </div>
+                    <div style="background: rgba(59, 130, 246, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center;">
+                        <div style="width: 38%; height: 100%; background: linear-gradient(90deg, #3B82F6, #60A5FA); display: flex; align-items: center; padding-left: 12px; min-width: 120px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Instagram, Meta, Apple Store</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lower Funnel -->
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: 600; color: var(--accent-green);">💰 Lower Funnel (In-app event, Purchase)</span>
+                        <span style="font-size: 16px;">Planned <strong style="color: var(--text-primary);">$1,952</strong> · <span style="color: var(--accent-gold);">Actual <strong>$2,014</strong></span> <span style="font-size: 14px;">(+3.1%)</span></span>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.2); border-radius: 8px; height: 32px; overflow: hidden; display: flex; align-items: center;">
+                        <div style="width: 57%; height: 100%; background: linear-gradient(90deg, #10B981, #34D399); display: flex; align-items: center; padding-left: 12px; min-width: 140px;">
+                            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">Google Search, Perf Max, SEM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top / Bottom Channel Performance -->
+        <section class="channel-section">
+            <h2 class="section-title top-channel">Top channel performance</h2>
+            <div class="channel-grid">
+                <!-- Apple Store -->
+                <div class="channel-card">
+                    <div class="channel-icon apple">🍎</div>
+                    <div class="channel-info">
+                        <div class="channel-name">Apple Store</div>
+                        <div class="channel-product">App store search ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Revenue:</strong> Planned 150 vs Actual 260 <span style="color: var(--accent-green);">(+73%)</span></p>
+                            <p style="margin-bottom: 8px; color: var(--text-secondary);"><strong>High performing keyword:</strong> Chat AI, perplexity, hallow, gemini ai</p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Insights:</strong> Bid on competitor keyword with cost cap</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TikTok -->
+                <div class="channel-card">
+                    <div class="channel-icon tiktok">🎵</div>
+                    <div class="channel-info">
+                        <div class="channel-name">TikTok</div>
+                        <div class="channel-product">TikTok follower ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Cost per follower:</strong> Planned 0.15 vs Actual 0.1 <span style="color: var(--accent-green);">(-43%)</span></p>
+                            <p style="margin-bottom: 8px; color: var(--text-secondary);"><strong>High engaging content:</strong> Real people, real experiences = immediate credibility</p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Insights:</strong> Only boost high-performing organic posts to amplify effect</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title bottom-channel" style="margin-top: 40px;">Bottom channel performance</h2>
+            <div class="channel-grid">
+                <!-- Meta -->
+                <div class="channel-card">
+                    <div class="channel-icon meta">📘</div>
+                    <div class="channel-info">
+                        <div class="channel-name">Meta</div>
+                        <div class="channel-product">Meta traffic retargeting ads</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Cost per install:</strong> Planned 10 vs Actual 32 <span style="color: var(--accent-red);">(+220%)</span></p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Learnings:</strong> Small retargeting pool drove up CPI. Need to expand audience pool and retarget with purchase event</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google -->
+                <div class="channel-card">
+                    <div class="channel-icon google">🔍</div>
+                    <div class="channel-info">
+                        <div class="channel-name">Google</div>
+                        <div class="channel-product">Google Performance Max</div>
+                        <div style="margin-top: 12px; font-size: 14px; line-height: 1.6;">
+                            <p style="margin-bottom: 8px;"><strong>Revenue:</strong> Target 100 vs Actual 32 <span style="color: var(--accent-red);">(-68%)</span></p>
+                            <p style="margin-bottom: 0; color: var(--accent-gold);"><strong>Learnings:</strong> Limited control over targeting is not suitable for niche vertical</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary of channel spending -->
+        <section class="plan-section">
+            <h2 class="section-title">Summary of channel spending</h2>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;">
+                <table class="plan-table">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>2/2-2/8 spending</th>
+                            <th>Next week planned spending</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TikTok</td>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>Maintain with top engaging content</td>
+                        </tr>
+                        <tr>
+                            <td>Instagram</td>
+                            <td>150</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>Meta</td>
+                            <td>150</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>Google search</td>
+                            <td>1,000</td>
+                            <td>1,000</td>
+                            <td>Maintain</td>
+                        </tr>
+                        <tr>
+                            <td>Google Perf max</td>
+                            <td>500</td>
+                            <td>0 <span style="color: var(--accent-red);">▼</span></td>
+                            <td>Pause</td>
+                        </tr>
+                        <tr>
+                            <td>SEM</td>
+                            <td>500</td>
+                            <td>500</td>
+                            <td>Refine by adding long tail keyword</td>
+                        </tr>
+                        <tr>
+                            <td>Apple store</td>
+                            <td>1,000</td>
+                            <td>1,500 <span style="color: var(--accent-green);">▲</span></td>
+                            <td>Increase 500 spending in MY, SG, ID</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Total</td>
+                            <td>3,400</td>
+                            <td>3,100</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Data Source: <a href="https://docs.google.com/spreadsheets/d/1-c3h0iCHQt2iwALdPyNJQLsFOMFG5IbByHfRD2SIZMs/edit?gid=104153573#gid=104153573" target="_blank">Weekly Planning Sheet (2/20 tab)</a></p>
+        </footer>
+    </div>
+</body>
+</html>
+
